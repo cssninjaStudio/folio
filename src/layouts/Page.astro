@@ -1,0 +1,28 @@
+---
+import type { Frontmatter } from '@config'
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+
+export interface Props {
+  frontmatter: Frontmatter
+}
+
+const { frontmatter } = Astro.props
+---
+
+<Layout frontmatter={frontmatter}>
+  <Section class="bg-white dark:bg-muted-900">
+    <Container>
+      <div>
+        <div class="relative py-20">
+          <div
+            class="max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert"
+          >
+            <slot />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</Layout>

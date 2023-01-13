@@ -1,0 +1,96 @@
+---
+import type { MarkdownInstance } from 'astro'
+import type { Frontmatter } from '@config'
+import { categoryDetail, SiteMetadata } from '@config'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import Card from '@components/base/Card.astro'
+import SVGImg from '@components/svgimg.astro'
+import Img from '@components/img.astro'
+
+const frontmatter: Frontmatter = {
+  title: 'Categories',
+  description: 'Categories for articles',
+  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  socialImage: '../images/posts/post-2.png',
+  publishDate: SiteMetadata.buildTime,
+}
+
+const allPosts = (await Astro.glob(
+  '../../pages/blog/*.{md,mdx}'
+)) as MarkdownInstance<Frontmatter>[]
+const posts = allPosts
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+  .filter(post => !post.frontmatter.draft)
+
+const categories = Array.from(
+  new Set(posts.flatMap(post => post.frontmatter.categories))
+).slice(0, 4)
+---
+
+<Section class="bg-white dark:bg-muted-900 pb-0">
+  <Container class="pb-20 border-b border-muted-200 dark:border-muted-800">
+    <div class="relative">
+      <div class="relative flex flex-col md:flex-row items-center justify-between gap-y-4 mb-6">
+        <div class="max-w-md ltablet:max-w-xl lg:max-w-xl space-y-2">
+          <h2
+            class="font-sans font-medium text-3xl text-muted-800 dark:text-white"
+          >
+            Featured categories
+          </h2>
+          <p class="font-sans ptablet:text-sm text-muted-500 dark:text-muted-400">
+            Dive into a world of diverse and informative content with our
+            featured categories: your ultimate guide to exploring the subjects
+            that matter to you
+          </p>
+        </div>
+        <div class="w-full md:w-auto flex items-center justify-start md:justify-end gap-4">
+          <a
+            href={import.meta.env.BASE_URL + 'categories'}
+            class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
+          >
+            All Categories
+          </a>
+          <a
+            href={import.meta.env.BASE_URL + 'tags'}
+            class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
+          >
+            All Tags</a
+          >
+        </div>
+      </div>
+      <div class="grid ptablet:grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          categories.map(category => (
+            <a
+              href={`${import.meta.env.BASE_URL}category/${category}/`}
+              class="relative block group"
+            >
+              <Card class="p-3 rounded-xl">
+                <div class="relative">
+                  <Img
+                    src={categoryDetail(category).coverImage}
+                    alt={categoryDetail(category).description}
+                    class="relative w-full h-64 bg-muted-100 dark:bg-muted-700/20 rounded-lg overflow-hidden group-hover:opacity-75 object-center object-cover transition-opacity duration-300"
+                  />
+                </div>
+                <div class="mt-2">
+                  <h3 class="font-sans font-medium text-lg capitalize text-muted-700 group-hover:text-primary-500 dark:text-muted-100 dark:group-hover:text-primary-500 transition-colors duration-300">
+                    {category}
+                  </h3>
+                  <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
+                    {categoryDetail(category).description}
+                  </p>
+                </div>
+              </Card>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</Section>

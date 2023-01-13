@@ -1,0 +1,105 @@
+---
+import type { MarkdownInstance } from 'astro'
+import type { Frontmatter } from '@config'
+import { categoryDetail, SiteMetadata } from '@config'
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import Card from '@components/base/Card.astro'
+import Subscribe from '@components/content/Subscribe.astro'
+import BlogAllTags from '@components/blog/BlogAllTags.astro'
+import BlogAuthorsFeatured from '@components/blog/BlogAuthorsFeatured.astro'
+import Img from '@components/img.astro'
+
+const frontmatter: Frontmatter = {
+  title: 'Categories',
+  description: 'Articles by categories',
+  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  socialImage: undefined,
+  publishDate: SiteMetadata.buildTime,
+}
+
+const allPosts = (await Astro.glob(
+  './blog/*.{md,mdx}'
+)) as MarkdownInstance<Frontmatter>[]
+const posts = allPosts
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+  .filter(post => !post.frontmatter.draft)
+
+const categories = Array.from(
+  new Set(posts.flatMap(post => post.frontmatter.categories))
+)
+---
+
+<Layout frontmatter={frontmatter}>
+  <Section class="bg-white dark:bg-muted-900 min-h-screen pb-0">
+    <Container>
+      <div class="relative pb-20 border-b border-muted-200 dark:border-muted-800">
+        <div class="pt-10 sm:pt-20 mb-8">
+          <div class="max-w-xl space-y-2">
+            <h2
+              class="font-sans font-medium text-4xl text-muted-700 dark:text-white"
+            >
+              Categories
+            </h2>
+            <p class="font-sans text-sm lg:text-base text-muted-500 dark:text-muted-400">
+              Dive into a world of diverse and informative content with our
+              featured categories: your ultimate guide to exploring the subjects
+              that matter to you
+            </p>
+          </div>
+        </div>
+        <div
+          class="grid sm:grid-cols-2 ltablet:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
+        >
+          {
+            categories.map(category => (
+              <a
+                href={`${import.meta.env.BASE_URL}category/${category}/`}
+                class="relative group"
+              >
+                <Card class="p-3 rounded-xl">
+                  <div class="relative">
+                    {/* } {categoryDetail(category).coverImage !== undefined ? (
+                      <Img
+                      src={categoryDetail(category).coverImage}
+                        alt={categoryDetail(category).description}
+                        class="w-full h-full object-center object-cover"
+                      />
+                    ) : (
+                      <SVGImg
+                        src={categoryDetail(category).coverSVG}
+                        alt={categoryDetail(category).description}
+                        class="w-full h-full object-center object-cover"
+                      />
+                    )} */}
+                    <Img
+                      src={categoryDetail(category).coverImage}
+                      alt={categoryDetail(category).description}
+                      class="relative w-full h-64 bg-muted-100 dark:bg-muted-700/20 rounded-lg overflow-hidden group-hover:opacity-75 object-center object-cover transition-opacity duration-300"
+                    />
+                  </div>
+                  <div class="mt-2">
+                    <h3 class="font-sans font-medium text-lg capitalize text-muted-700 group-hover:text-primary-500 dark:text-muted-100 dark:group-hover:text-primary-500 transition-colors duration-300">
+                      {category}
+                    </h3>
+                    <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
+                      {categoryDetail(category).description}
+                    </p>
+                  </div>
+                </Card>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <BlogAllTags />
+    </Container>
+  </Section>
+  <BlogAuthorsFeatured />
+  <Subscribe />
+</Layout>

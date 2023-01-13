@@ -1,0 +1,131 @@
+---
+import type { MarkdownInstance } from 'astro'
+import { Icon } from 'astro-icon'
+import type { Frontmatter } from '@config'
+import { authorDetail } from '@config'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import Card from '@components/base/Card.astro'
+import PostCategoryBadges from '@components/blog/PostCategoryBadges.astro'
+import SVGImg from '@components/svgimg.astro'
+import Img from '@components/img.astro'
+
+export interface Props {
+  posts: MarkdownInstance<Frontmatter>[]
+}
+
+const { posts } = Astro.props
+
+const headerPosts = posts.slice(0, 4)
+---
+
+<Section class="bg-white dark:bg-muted-900 pb-0">
+  <Container class="pb-20 border-b border-muted-200 dark:border-muted-800">
+    <div class="max-w-xl space-y-2 mb-8">
+      <h2 class="font-sans font-medium text-3xl text-muted-800 dark:text-white">
+        Featured posts
+      </h2>
+      <p class="font-sans text-muted-500 dark:text-muted-400">
+        Stay up-to-date with the most engaging and thought-provoking articles in
+        our featured posts section: your go-to destination for quality content
+      </p>
+    </div>
+    <div class="relative grid ptablet:grid-cols-2 md:grid-cols-4 gap-4 -mt-2">
+      {
+        headerPosts.map(post => (
+          <Card class="p-3 rounded-xl">
+            <div class="relative rounded-lg overflow-hidden">
+              <div class="relative">
+                {post.frontmatter.coverSVG ? (
+                  <SVGImg
+                    src={post.frontmatter.coverSVG}
+                    alt={post.frontmatter.title + ' featured image'}
+                    class="block w-full h-[420px] object-cover rounded-lg"
+                  />
+                ) : (
+                  <Img
+                    src={
+                      post.frontmatter.coverImage ||
+                      post.frontmatter.socialImage
+                    }
+                    alt={post.frontmatter.title + ' featured image'}
+                    class="block w-full h-[420px] object-cover rounded-lg"
+                  />
+                )}
+                <div class="absolute top-4 right-4">
+                  {post.frontmatter.categories && (
+                    <PostCategoryBadges
+                      categories={post.frontmatter.categories}
+                    />
+                  )}
+                </div>
+              </div>
+              <div class="absolute bottom-0 left-0 w-full h-2/3 z-10 bg-gradient-to-t from-muted-1000" />
+              <div class="absolute top-0 left-0 w-full h-full z-20 flex flex-col justify-end">
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-1 mt-4 text-muted-100">
+                    <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
+                    <p class="font-sans text-xs">
+                      {post.frontmatter.publishDate?.slice(0, 10)}
+                    </p>
+                  </div>
+                  <h3 class="font-sans font-light text-xl mb-2">
+                    <a
+                      href={post.url}
+                      class="text-white hover:text-primary-300 transition-colors duration-300"
+                    >
+                      {post.frontmatter.title}
+                    </a>
+                  </h3>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      {post.frontmatter.author && (
+                        <span class="flex items-center gap-2">
+                          <a
+                            href={`${import.meta.env.BASE_URL}author/${
+                              post.frontmatter.author
+                            }/`}
+                            class="h-8 w-8 flex items-center justify-center shrink-0 rounded-full bg-white dark:bg-muted-800"
+                          >
+                            {authorDetail(post.frontmatter.author).image !==
+                            undefined ? (
+                              <Img
+                                src={
+                                  authorDetail(post.frontmatter.author).image
+                                }
+                                alt={post.frontmatter.author}
+                                class="h-8 w-8 rounded-full object-cover scale-90"
+                              />
+                            ) : (
+                              <SVGImg
+                                src={authorDetail(post.frontmatter.author).svg}
+                                alt={post.frontmatter.author}
+                                class="h-8 w-8 rounded-full object-cover scale-90"
+                              />
+                            )}
+                          </a>
+                          <div>
+                            <h4 class="font-sans text-sm">
+                              <a
+                                href={`${import.meta.env.BASE_URL}author/${
+                                  post.frontmatter.author
+                                }/`}
+                                class="text-white hover:text-primary-300 transition-colors duration-300"
+                              >
+                                {post.frontmatter.author}
+                              </a>
+                            </h4>
+                          </div>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+  </Container>
+</Section>

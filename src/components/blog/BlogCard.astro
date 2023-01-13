@@ -1,0 +1,125 @@
+---
+import { Icon } from 'astro-icon'
+import type { MarkdownInstance } from 'astro'
+import type { Frontmatter } from '@config'
+import { authorDetail } from '@config'
+import { categoryDetail } from '@config'
+import Card from '@components/base/Card.astro'
+import SVGImg from '@components/svgimg.astro'
+import Img from '@components/img.astro'
+import PostCategoryBadges from '@components/blog/PostCategoryBadges.astro'
+
+export interface Props {
+  post: MarkdownInstance<Frontmatter>
+}
+
+const { post } = Astro.props
+
+const image =
+  post.frontmatter.coverImage ||
+  post.frontmatter.socialImage ||
+  categoryDetail(post.frontmatter.categories && post.frontmatter.categories[0])
+    .socialImage
+const svgimg =
+  post.frontmatter.coverSVG ||
+  (post.frontmatter.coverImage
+    ? null
+    : categoryDetail(
+        post.frontmatter.categories && post.frontmatter.categories[0]
+      ).coverSVG)
+---
+
+<div class="relative">
+  <Card class="p-4 ltablet:p-5 md:p-5 lg:p-6 rounded-2xl">
+    <div class="relative">
+      <a href={post.url}>
+        {
+          svgimg ? (
+            <SVGImg
+              src={svgimg}
+              alt={post.frontmatter.title + ' featured image'}
+              class="rounded-lg w-full object-cover"
+            />
+          ) : (
+            <Img
+              src={image}
+              alt={post.frontmatter.title + ' featured image'}
+              class="rounded-lg w-full object-cover"
+            />
+          )
+        }
+        <p class="sr-only">{post.frontmatter.title}</p>
+      </a>
+      <div class="absolute top-4 right-4">
+        {
+          post.frontmatter.categories && (
+            <PostCategoryBadges categories={post.frontmatter.categories} />
+          )
+        }
+      </div>
+    </div>
+
+    <div
+      class="flex items-center gap-2 mb-2 mt-4 text-muted-500 dark:text-muted-400"
+    >
+      <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
+      <p class="font-sans text-sm">
+        {post.frontmatter.publishDate?.slice(0, 10)}
+      </p>
+    </div>
+    <a href={post.url}>
+      <h3
+        class="line-clamp-2 font-sans font-medium lg:text-xl text-muted-700 dark:text-white mb-2"
+      >
+        {post.frontmatter.title}
+      </h3>
+    </a>
+    <p
+      class="line-clamp-3 font-sans ltablet:text-xs text-sm text-muted-500 dark:text-muted-400 mb-4"
+    >
+      {post.frontmatter.description}
+    </p>
+    <div class="flex items-center justify-between">
+      <div>
+        {
+          post.frontmatter.author && (
+            <span class="flex items-center leading-tight">
+              {authorDetail(post.frontmatter.author).image !== undefined ? (
+                <Img
+                  src={authorDetail(post.frontmatter.author).image}
+                  alt={post.frontmatter.author}
+                  class="h-9 w-9 sm:h-11 sm:w-11 ltablet:h-10 ltablet:w-10 rounded-full mr-2 object-cover"
+                />
+              ) : (
+                <SVGImg
+                  src={authorDetail(post.frontmatter.author).svg}
+                  alt={post.frontmatter.author}
+                  class="h-9 w-9 sm:h-11 sm:w-11 ltablet:h-10 ltablet:w-10 rounded-full mr-2 object-cover"
+                />
+              )}
+              <div>
+                <h4 class="font-sans text-sm text-muted-800 dark:text-muted-100">
+                  {post.frontmatter.author}
+                </h4>
+                <p class="font-sans text-xs text-muted-400">Article author</p>
+              </div>
+            </span>
+          )
+        }
+      </div>
+      <div class="flex">
+        <a
+          href={post.url}
+          class="group relative flex items-center gap-2 font-sans text-sm text-primary-500 transition-colors duration-300"
+        >
+          <span class="sr-only">{post.frontmatter.title}</span>
+          <span>Read More</span>
+          <Icon
+            name="lucide:arrow-right"
+            class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-300"
+          />
+        </a>
+      </div>
+    </div>
+  </Card>
+</div>

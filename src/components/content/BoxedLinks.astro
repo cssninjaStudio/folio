@@ -1,0 +1,104 @@
+---
+import Container from '@components/layout/Container.astro'
+import Section from '@components/layout/Section.astro'
+import Card from '@components/base/Card.astro'
+import SceneOne from '@images/categories/1.png'
+import SceneTwo from '@images/categories/1.png'
+import SceneThree from '@images/categories/1.png'
+import SceneFour from '@images/categories/1.png'
+
+const callouts = [
+  {
+    name: 'Stress and burnout',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo nimium beatus est.',
+    imageSrc: '../../images/categories/1.png',
+    imageAlt: 'Box illustration',
+    href: 'https://cssninja.io',
+  },
+  {
+    name: 'Physical exercise',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo nimium beatus est.',
+    imageSrc: '../../images/categories/1.png',
+    imageAlt: 'Box illustration',
+    href: 'https://cssninja.io',
+  },
+  {
+    name: 'UI/',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo nimium beatus est.',
+    imageSrc: '../../images/categories/1.png',
+    imageAlt: 'Box illustration',
+    href: 'https://cssninja.io',
+  },
+  {
+    name: 'Lifestyle and trends',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo nimium beatus est.',
+    imageSrc: '../../images/categories/1.png',
+    imageAlt: 'Box illustration',
+    href: 'https://cssninja.io',
+  },
+]
+---
+
+<Section class="bg-white dark:bg-muted-900 pb-0">
+  <Container class="pb-20 border-b border-muted-200 dark:border-muted-800">
+    <div class="relative">
+      <div class="relative flex items-center justify-between">
+        <div class="max-w-xl space-y-2 mb-6">
+          <h2
+            class="font-sans font-medium text-3xl text-muted-800 dark:text-white"
+          >
+            Featured categories
+          </h2>
+          <p class="font-sans text-muted-500 dark:text-muted-400">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo
+            nimium beatus est; Idemne, quod iucunde? Duo Reges: constructio
+            interrete.
+          </p>
+        </div>
+        <div class="flex items-center justify-end gap-4">
+          <a
+            href={import.meta.env.BASE_URL + 'categories'}
+            class="h-10 flex items-center justify-center font-sans text-sm px-6 rounded-full border border-muted-200 dark:border-muted-700/80 bg-white dark:bg-muted-800"
+          >
+            All Categories
+          </a>
+          <a
+            href={import.meta.env.BASE_URL + 'tags'}
+            class="h-10 flex items-center justify-center font-sans text-sm px-6 rounded-full border border-muted-200 dark:border-muted-700/80 bg-white dark:bg-muted-800"
+          >
+            All Tags</a
+          >
+        </div>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        {
+          callouts.map(callout => (
+            <a href={callout.href} class="relative block group">
+              <Card class="p-3 rounded-xl">
+                <div class="relative">
+                  <img
+                    src={callout.imageSrc}
+                    alt={callout.imageAlt}
+                    class="relative w-full h-64 bg-purple-100 dark:bg-purple-800 rounded-lg overflow-hidden group-hover:opacity-75 object-center object-cover"
+                  />
+                </div>
+                <div class="mt-2">
+                  <h3 class="font-sans font-medium text-lg text-muted-700 group-hover:text-primary-500 dark:text-muted-100 dark:group-hover:text-primary-500 transition-colors duration-300">
+                    {callout.name}
+                  </h3>
+                  <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
+                    {callout.description}
+                  </p>
+                </div>
+              </Card>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</Section>

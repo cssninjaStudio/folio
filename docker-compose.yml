@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  folio-demo:
+    image: digisquad/cssninja.folio-demo:latest
+    networks:
+      - cssninja-services
+    restart: 'unless-stopped'
+    labels:
+      traefik.enable: true
+      traefik.docker.network: 'cssninja-services'
+      traefik.http.routers.folio-demo.entrypoints: 'http'
+      traefik.http.routers.folio-demo.rule: 'Host(`folio.${HOST:-127.0.0.1.nip.io}`)'
+      traefik.http.routers.folio-demo.middlewares: 'https-redirect@file'
+      traefik.http.services.folio-demo-https.loadbalancer.server.port: 8080
+      traefik.http.routers.folio-demo-https.rule: 'Host(`folio.${HOST:-127.0.0.1.nip.io}`)'
+      traefik.http.routers.folio-demo-https.tls: true
+      traefik.http.routers.folio-demo-https.entrypoints: 'https'
+      traefik.http.routers.folio-demo-https.tls.certresolver: 'http'
+
+networks:
+  cssninja-services:
+    external: true

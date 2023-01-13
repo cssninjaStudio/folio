@@ -1,0 +1,66 @@
+---
+import type { MarkdownInstance, PaginateFunction, Page } from 'astro'
+import type { Frontmatter } from '@config'
+import { SiteMetadata, categoryDetail, PAGE_SIZE } from '@config'
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import BlogList from '@components/blog/BlogList.astro'
+import BlogPagination from '@components/blog/BlogPagination.astro'
+
+export interface Props {
+  page: Page<MarkdownInstance<Frontmatter>>
+}
+
+const { category } = Astro.params
+const { page } = Astro.props
+
+const detail = categoryDetail(category as string)
+
+const frontmatter: Frontmatter = {
+  title: 'Category: ' + category + (page.size < page.total ? ' (page ' + page.currentPage + ' of ' + page.lastPage + ')' : ''),
+  description:
+    detail.description + ' ' +
+    'Showing articles ' +
+    (page.start + 1) +
+    '-' +
+    (page.end + 1) +
+    ' (total ' +
+    page.total +
+    ')',
+  coverSVG: detail.coverSVG,
+  socialImage: detail.socialImage,
+  publishDate: SiteMetadata.buildTime,
+}
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const allPosts = (await Astro.glob(
+    '../../blog/*.{md,mdx}'
+  )) as MarkdownInstance<Frontmatter>[]
+  const posts = allPosts
+    .sort(
+      (a, b) =>
+        new Date(b.frontmatter.publishDate).valueOf() -
+        new Date(a.frontmatter.publishDate).valueOf()
+    )
+    .filter(post => !post.frontmatter.draft)
+
+  const categories = Array.from(new Set(posts.flatMap(post => post.frontmatter.categories)))
+
+  return categories.map(category => {
+    return paginate(posts.filter(post => category && post.frontmatter.categories?.includes(category)), {
+      params: { category },
+      pageSize: PAGE_SIZE
+    })
+  })
+}
+---
+
+<Layout frontmatter={frontmatter}>
+  <Section class="bg-muted-100 dark:bg-muted-900">
+    <Container>
+      <BlogList title={category} subtitle={`Find below all the posts related to the ${category} category. We hope that you'll quickly find what you've been looking for.`} posts={page.data} />
+      <BlogPagination page={page} />
+    </Container>
+  </Section>
+</Layout>

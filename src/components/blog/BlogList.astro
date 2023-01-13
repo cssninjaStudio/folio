@@ -1,0 +1,48 @@
+---
+import type { MarkdownInstance } from 'astro'
+import type { Frontmatter } from '@config'
+import BlogCard from '@components/blog/BlogCard.astro'
+
+export interface Props {
+  posts: MarkdownInstance<Frontmatter>[]
+  title?: string
+  subtitle?: string
+}
+
+const { posts, title, subtitle } = Astro.props
+---
+
+<div class="relative flex flex-col md:flex-row items-center justify-between gap-y-4 pt-10 pb-10">
+  <div class="max-w-md lg:max-w-xl space-y-2">
+    <h2
+      class="font-sans font-medium text-4xl capitalize text-muted-700 dark:text-white"
+    >
+      {title ? title : 'Latest Posts'}
+    </h2>
+    {subtitle && <p class="font-sans text-sm lg:text-base text-muted-500 dark:text-muted-400">{subtitle}</p>}
+  </div>
+  <div class="w-full md:w-auto flex items-center justify-start md:justify-end gap-4">
+    <a
+      href={import.meta.env.BASE_URL + 'authors'}
+      class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
+    >
+      Authors</a
+    >
+    <a
+      href={import.meta.env.BASE_URL + 'categories'}
+      class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
+    >
+      Categories
+    </a>
+    <a
+      href={import.meta.env.BASE_URL + 'tags'}
+      class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
+    >
+      Tags</a
+    >
+  </div>
+</div>
+
+<div class="grid md:grid-cols-2 ltablet:grid-cols-3 lg:grid-cols-3 ltablet:gap-4 gap-6 mb-20">
+  {posts.map(post => <BlogCard post={post} />)}
+</div>

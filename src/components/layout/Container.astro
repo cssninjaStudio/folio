@@ -1,0 +1,7 @@
+---
+const { ...attrs } = Astro.props
+---
+
+<div class={`w-full max-w-7xl mx-auto ${attrs.class}`}>
+  <slot />
+</div>

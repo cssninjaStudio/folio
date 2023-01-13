@@ -1,0 +1,44 @@
+---
+import type { Frontmatter } from '@config'
+import { Icon } from 'astro-icon'
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import BlogHero from '@components/blog/BlogHero.astro'
+import BlogTags from '@components/blog/BlogTags.astro'
+
+export interface Props {
+  frontmatter: Frontmatter
+}
+
+const { frontmatter } = Astro.props
+---
+
+<Layout frontmatter={frontmatter}>
+  <div>
+    <div class="relative">
+      <BlogHero frontmatter={frontmatter} />
+      <Section class="bg-white dark:bg-muted-900">
+        <Container>
+          <div
+            class="max-w-2xl xxl:max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert"
+          >
+            <slot />
+
+            <!-- Tags -->
+            <div class="py-10 mt-10 border-t border-muted-200 dark:border-muted-700/60">
+              <BlogTags tags={frontmatter.tags} />
+            </div>
+            <!-- Back -->
+            <div class="pb-16">
+              <a class="flex items-center gap-2 font-sans text-sm no-underline text-primary-500" href="/blog">
+                <Icon name="lucide:arrow-left" class="inline-block w-4 h-4" />
+                <span>Back to blog</span>
+              </a>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </div>
+  </div>
+</Layout>

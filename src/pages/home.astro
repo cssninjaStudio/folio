@@ -1,0 +1,48 @@
+---
+import type { MarkdownInstance } from 'astro'
+import type { Frontmatter } from '@config'
+import { SiteMetadata } from '@config'
+import Layout from '@layouts/Default.astro'
+import BlogHeader from '@components/blog/BlogHeader.astro'
+import BlogCategoriesFeatured from '@components/blog/BlogCategoriesFeatured.astro'
+import BlogPostsFeatured from '@components/blog/BlogPostsFeatured.astro'
+import BlogAuthorsFeatured from '@components/blog/BlogAuthorsFeatured.astro'
+import BlogSummary from '@components/blog/BlogSummary.astro'
+import Subscribe from '@components/content/Subscribe.astro'
+
+const frontmatter: Frontmatter = {
+  title: SiteMetadata.title,
+  description: SiteMetadata.description,
+  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  socialImage: undefined,
+  publishDate: SiteMetadata.buildTime,
+}
+
+const posts = (await Astro.glob(
+  './blog/**/*.{md,mdx}'
+)) as MarkdownInstance<Frontmatter>[]
+const latestPosts = posts
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+  .filter(post => !post.frontmatter.draft)
+
+const featuredPosts = posts
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+  .filter(post => post.frontmatter.featured)
+---
+
+<Layout frontmatter={frontmatter}>
+  <BlogHeader posts={latestPosts} />
+  <BlogCategoriesFeatured />
+  <BlogPostsFeatured posts={featuredPosts} />
+  <BlogAuthorsFeatured />
+  <BlogSummary posts={latestPosts} />
+  <Subscribe />
+</Layout>
