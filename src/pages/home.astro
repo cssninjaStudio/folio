@@ -1,7 +1,6 @@
 ---
-import type { MarkdownInstance } from 'astro'
-import type { Frontmatter } from '@config'
 import { SiteMetadata } from '@config'
+import { getCollection } from 'astro:content';
 import Layout from '@layouts/Default.astro'
 import BlogHeader from '@components/blog/BlogHeader.astro'
 import BlogCategoriesFeatured from '@components/blog/BlogCategoriesFeatured.astro'
@@ -10,39 +9,38 @@ import BlogAuthorsFeatured from '@components/blog/BlogAuthorsFeatured.astro'
 import BlogSummary from '@components/blog/BlogSummary.astro'
 import Subscribe from '@components/content/Subscribe.astro'
 
-const frontmatter: Frontmatter = {
+const frontmatter = {
   title: SiteMetadata.title,
   description: SiteMetadata.description,
   coverSVG: '../svg/illustrations/scenes/draw-1.svg',
   socialImage: undefined,
   publishDate: SiteMetadata.buildTime,
 }
-
-const posts = (await Astro.glob(
-  './blog/**/*.{md,mdx}'
-)) as MarkdownInstance<Frontmatter>[]
-const latestPosts = posts
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.publishDate).valueOf() -
-      new Date(a.frontmatter.publishDate).valueOf()
-  )
-  .filter(post => !post.frontmatter.draft)
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) =>
+    b.data.publishDate.valueOf() -
+    a.data.publishDate.valueOf()
+);
+// const posts = (await Astro.glob(
+//   './blog/**/*.{md,mdx}'
+// )) as MarkdownInstance<Frontmatter>[]
+// const latestPosts = posts
+//   .sort(
+//     (a, b) =>
+//       new Date(b.data.publishDate).valueOf() -
+//       new Date(a.data.publishDate).valueOf()
+//   )
+//   .filter(post => !post.data.draft)
 
 const featuredPosts = posts
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.publishDate).valueOf() -
-      new Date(a.frontmatter.publishDate).valueOf()
-  )
-  .filter(post => post.frontmatter.featured)
+  .filter(post => post.data.featured)
 ---
 
 <Layout frontmatter={frontmatter}>
-  <BlogHeader posts={latestPosts} />
+  <BlogHeader posts={posts} />
   <BlogCategoriesFeatured />
   <BlogPostsFeatured posts={featuredPosts} />
   <BlogAuthorsFeatured />
-  <BlogSummary posts={latestPosts} />
+  <BlogSummary posts={posts} />
   <Subscribe />
 </Layout>

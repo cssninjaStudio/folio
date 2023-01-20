@@ -1,0 +1,55 @@
+---
+import { getCollection, CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon'
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+import BlogHero from '@components/blog/BlogHero.astro'
+import BlogTags from '@components/blog/BlogTags.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(entry => ({
+    // Pass blog entry via props
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+interface Props {
+  // Optionally use `CollectionEntry` for type safety
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+
+<Layout frontmatter={entry.data}>
+  <div>
+    <div class="relative">
+      <BlogHero frontmatter={entry.data} />
+      <Section class="bg-white dark:bg-muted-900">
+        <Container>
+          <div
+            class="max-w-2xl xxl:max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert"
+          >
+            <Content />
+
+            <!-- Tags -->
+            <div class="py-10 mt-10 border-t border-muted-200 dark:border-muted-700/60">
+              <BlogTags tags={entry.data.tags} />
+            </div>
+            <!-- Back -->
+            <div class="pb-16">
+              <a class="flex items-center gap-2 font-sans text-sm no-underline text-primary-500" href="/blog">
+                <Icon name="lucide:arrow-left" class="inline-block w-4 h-4" />
+                <span>Back to blog</span>
+              </a>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </div>
+  </div>
+</Layout>

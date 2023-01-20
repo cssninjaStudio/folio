@@ -1,5 +1,4 @@
 ---
-import type { Frontmatter } from '@config'
 import { SiteMetadata } from '@config'
 import Layout from '@layouts/Base.astro'
 import DemoCta from '@components/demo/DemoCta.astro'
@@ -12,7 +11,7 @@ import DemoPurchase from '@components/demo/DemoPurchase.astro'
 import DemoScreenshot from '@components/demo/DemoScreenshot.astro'
 import DemoTechs from '@components/demo/DemoTechs.astro'
 
-const frontmatter: Frontmatter = {
+const frontmatter = {
   title: SiteMetadata.title,
   description: SiteMetadata.description,
   coverSVG: '../svg/illustrations/scenes/draw-1.svg',
@@ -43,7 +42,7 @@ const frontmatter: Frontmatter = {
           <DemoScreenshot />
 
           <!--FAQ-->
-          <!--DemoFaq /-->
+          <!-- <DemoFaq /> -->
         </div>
         <!--Column-->
         <div class="w-full ltablet:w-4/12 lg:w-4/12">

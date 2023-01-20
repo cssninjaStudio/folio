@@ -1,4 +1,5 @@
 ---
+import { slug } from 'github-slugger'
 export interface Props {
   categories?: string[]
 }
@@ -11,9 +12,7 @@ const { categories } = Astro.props
     <div class="flex flex-row flex-wrap items-start gap-2">
       {categories.map(category => (
         <a
-          href={`${import.meta.env.BASE_URL}category/${encodeURIComponent(
-            category
-          )}/`}
+          href={`/categories/${slug(category)}/`}
           class="inline-block font-sans text-xs capitalize text-white py-1 px-3 rounded-full bg-primary-500 shadow-lg shadow-primary-500/20"
         >
           {category}

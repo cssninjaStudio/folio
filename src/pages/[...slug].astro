@@ -1,0 +1,39 @@
+---
+import { getCollection, CollectionEntry } from 'astro:content';
+import Layout from '@layouts/Default.astro'
+import Section from '@components/layout/Section.astro'
+import Container from '@components/layout/Container.astro'
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
+  return pages.map(entry => ({
+    // Pass page entry via props
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+interface Props {
+  // Optionally use `CollectionEntry` for type safety
+  entry: CollectionEntry<'pages'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+
+<Layout frontmatter={entry.data}>
+  <Section class="bg-white dark:bg-muted-900">
+    <Container>
+      <div>
+        <div class="relative py-20">
+          <div
+            class="max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert"
+          >
+            <Content />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</Layout>

@@ -3,7 +3,7 @@ import type { Frontmatter } from '@config'
 import SEO from '@components/seo.astro'
 
 export interface Props {
-  frontmatter: Frontmatter
+  frontmatter: CollectionEntry<'blog'>['data']
 }
 
 const { frontmatter } = Astro.props

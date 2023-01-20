@@ -1,7 +1,7 @@
 ---
-import type { MarkdownInstance } from 'astro'
+import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon'
-import type { Frontmatter } from '@config'
+import { slug } from 'github-slugger'
 import { authorDetail } from '@config'
 import Container from '@components/layout/Container.astro'
 import Section from '@components/layout/Section.astro'
@@ -12,7 +12,7 @@ import Img from '@components/img.astro'
 // import Img from '@components/base/Img.astro'
 
 export interface Props {
-  posts: MarkdownInstance<Frontmatter>[]
+  posts: CollectionEntry<'blog'>[]
 }
 
 const { posts } = Astro.props
@@ -38,19 +38,19 @@ const otherPosts = posts.slice(1, 5)
         </div>
         <div class="w-full md:w-auto flex justify-start md:justify-end gap-4">
           <a
-            href={import.meta.env.BASE_URL + 'blog'}
+            href={'/blog'}
             class="h-10 flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
           >
             All Articles</a
           >
           <a
-            href={import.meta.env.BASE_URL + 'categories'}
+            href={'/categories'}
             class="h-10 hidden lg:flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
           >
             Categories
           </a>
           <a
-            href={import.meta.env.BASE_URL + 'tags'}
+            href={'/tags'}
             class="h-10 hidden lg:flex items-center justify-center font-sans text-sm px-6 text-muted-600 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 rounded-full border border-muted-200 dark:border-muted-700/80 hover:border-primary-500 dark:hover:border-primary-500 bg-white dark:bg-muted-800 transition-colors duration-300"
           >
             Tags</a
@@ -62,22 +62,22 @@ const otherPosts = posts.slice(1, 5)
         <div class="col-span-12 ltablet:col-span-6 lg:col-span-6">
           <Card class="p-6 rounded-xl">
             <div class="relative">
-              <a href={newestPost.url} class="block">
-                <span class="sr-only">{newestPost.frontmatter.title}</span>
+              <a href={`/blog/${newestPost.slug}`} class="block">
+                <span class="sr-only">{newestPost.data.title}</span>
                 {
-                  newestPost.frontmatter.coverSVG ? (
+                  newestPost.data.coverSVG ? (
                     <SVGImg
-                      src={newestPost.frontmatter.coverSVG}
-                      alt={newestPost.frontmatter.title + ' featured image'}
+                      src={newestPost.data.coverSVG}
+                      alt={newestPost.data.title + ' featured image'}
                       class="rounded-lg w-full h-64 md:h-80 object-cover"
                     />
                   ) : (
                     <Img
                       src={
-                        newestPost.frontmatter.coverImage ||
-                        newestPost.frontmatter.socialImage
+                        newestPost.data.coverImage ||
+                        newestPost.data.socialImage
                       }
-                      alt={newestPost.frontmatter.title + ' featured image'}
+                      alt={newestPost.data.title + ' featured image'}
                       class="rounded-lg w-full h-64 md:h-80 object-cover"
                     />
                   )
@@ -85,9 +85,9 @@ const otherPosts = posts.slice(1, 5)
               </a>
               <div class="absolute top-4 right-4">
                 {
-                  newestPost.frontmatter.categories && (
+                  newestPost.data.categories && (
                     <PostCategoryBadges
-                      categories={newestPost.frontmatter.categories}
+                      categories={newestPost.data.categories}
                     />
                   )
                 }
@@ -98,45 +98,45 @@ const otherPosts = posts.slice(1, 5)
             >
               <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
               <p class="font-sans text-sm">
-                {newestPost.frontmatter.publishDate?.slice(0, 10)}
+                {newestPost.data.publishDate?.toISOString()?.slice(0, 10)}
               </p>
             </div>
-            <a href={newestPost.url}>
+            <a href={`/blog/${newestPost.slug}`}>
               <h2
                 class="font-sans font-medium text-xl text-muted-700 dark:text-white mb-2"
               >
-                {newestPost.frontmatter.title}
+                {newestPost.data.title}
               </h2>
             </a>
             <p
               class="line-clamp-3 font-sans text-sm text-muted-500 dark:text-muted-400 mb-4"
             >
-              {newestPost.frontmatter.description}
+              {newestPost.data.description}
             </p>
             <div class="flex items-center justify-between">
               <div>
                 {
-                  newestPost.frontmatter.author && (
+                  newestPost.data.author && (
                     <span class="flex items-center leading-tight">
-                      {authorDetail(newestPost.frontmatter.author).image !==
+                      {authorDetail(newestPost.data.author).image !==
                       undefined ? (
                         <Img
                           src={
-                            authorDetail(newestPost.frontmatter.author).image
+                            authorDetail(newestPost.data.author).image
                           }
-                          alt={newestPost.frontmatter.author}
+                          alt={newestPost.data.author}
                           class="h-11 w-11 rounded-full mr-2 object-cover"
                         />
                       ) : (
                         <SVGImg
-                          src={authorDetail(newestPost.frontmatter.author).svg}
-                          alt={newestPost.frontmatter.author}
+                          src={authorDetail(newestPost.data.author).svg}
+                          alt={newestPost.data.author}
                           class="h-11 w-11 rounded-full mr-2 object-cover"
                         />
                       )}
                       <div>
                         <h4 class="font-sans text-sm text-muted-800 dark:text-muted-100">
-                          <a href={`${import.meta.env.BASE_URL}author/${newestPost.frontmatter.author}/`}>{newestPost.frontmatter.author}</a>
+                          <a href={`/authors/${slug(newestPost.data.author)}/`}>{newestPost.data.author}</a>
                         </h4>
                         <p class="font-sans text-xs text-muted-400">
                           Article author
@@ -148,10 +148,10 @@ const otherPosts = posts.slice(1, 5)
               </div>
               <div class="flex">
                 <a
-                  href={newestPost.url}
+                  href={`/blog/${newestPost.slug}`}
                   class="group relative flex items-center gap-2 font-sans text-sm text-primary-500 transition-colors duration-300"
                 >
-                  <span class="sr-only">{newestPost.frontmatter.title}</span>
+                  <span class="sr-only">{newestPost.data.title}</span>
                   <span>Read More</span>
                   <Icon
                     name="lucide:arrow-right"
@@ -169,28 +169,28 @@ const otherPosts = posts.slice(1, 5)
                 <div class="relative">
                   <Card class="p-3 rounded-lg">
                     <div class="relative">
-                      <a href={post.url} class="block">
-                        {post.frontmatter.coverSVG ? (
+                      <a href={`/blog/${post.slug}`} class="block">
+                        {post.data.coverSVG ? (
                           <SVGImg
-                            src={post.frontmatter.coverSVG}
-                            alt={post.frontmatter.title + ' featured image'}
+                            src={post.data.coverSVG}
+                            alt={post.data.title + ' featured image'}
                             class="block lg:block rounded-md w-full h-64 md:h-40 object-cover"
                           />
                         ) : (
                           <Img
                             src={
-                              post.frontmatter.coverImage ||
-                              post.frontmatter.socialImage
+                              post.data.coverImage ||
+                              post.data.socialImage
                             }
-                            alt={post.frontmatter.title + ' featured image'}
+                            alt={post.data.title + ' featured image'}
                             class="block lg:block rounded-md w-full h-64 md:h-40 object-cover"
                           />
                         )}
                       </a>
                       <div class="absolute top-4 right-4 scale-90">
-                        {post.frontmatter.categories && (
+                        {post.data.categories && (
                           <PostCategoryBadges
-                            categories={post.frontmatter.categories}
+                            categories={post.data.categories}
                           />
                         )}
                       </div>
@@ -199,37 +199,37 @@ const otherPosts = posts.slice(1, 5)
                     <div class="flex items-center gap-2 mb-1 mt-4 text-muted-500 dark:text-muted-400">
                       <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
                       <p class="font-sans text-xs">
-                        {post.frontmatter.publishDate?.slice(0, 10)}
+                        {post.data.publishDate?.toISOString()?.slice(0, 10)}
                       </p>
                     </div>
-                    <a href={post.url}>
+                    <a href={`/blog/${post.slug}`}>
                       <h3 class="line-clamp-1 font-sans font-medium text-base text-muted-700 dark:text-white mb-3">
-                        {post.frontmatter.title}
+                        {post.data.title}
                       </h3>
                     </a>
                     <div class="flex items-center justify-between">
                       <div>
-                        {post.frontmatter.author && (
+                        {post.data.author && (
                           <span class="flex items-center mr-6">
-                            {authorDetail(post.frontmatter.author).image !==
+                            {authorDetail(post.data.author).image !==
                             undefined ? (
                               <Img
                                 src={
-                                  authorDetail(post.frontmatter.author).image
+                                  authorDetail(post.data.author).image
                                 }
-                                alt={post.frontmatter.author}
+                                alt={post.data.author}
                                 class="h-8 w-8 rounded-full mr-2 object-cover"
                               />
                             ) : (
                               <SVGImg
-                                src={authorDetail(post.frontmatter.author).svg}
-                                alt={post.frontmatter.author}
+                                src={authorDetail(post.data.author).svg}
+                                alt={post.data.author}
                                 class="h-8 w-8 rounded-full mr-2 object-cover"
                               />
                             )}
                             <div>
                               <h4 class="font-sans text-xs text-muted-800 dark:text-muted-100">
-                                <a href={`${import.meta.env.BASE_URL}author/${post.frontmatter.author}/`}>{post.frontmatter.author}</a>
+                                <a href={`/authors/${slug(post.data.author)}/`}>{post.data.author}</a>
                               </h4>
                             </div>
                           </span>
@@ -237,10 +237,10 @@ const otherPosts = posts.slice(1, 5)
                       </div>
                       <div class="flex ltablet:hidden">
                         <a
-                          href={post.url}
+                          href={`/blog/${post.slug}`}
                           class="group relative flex items-center gap-2 font-sans text-xs text-primary-500 transition-colors duration-300"
                         >
-                          <span class="sr-only">{post.frontmatter.title}</span>
+                          <span class="sr-only">{post.data.title}</span>
                           <span>Read More</span>
                           <Icon
                             name="lucide:arrow-right"

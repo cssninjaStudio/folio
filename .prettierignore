@@ -5,3 +5,4 @@ src/pages/blog/*.md
 astro
 astro.build
 astro.new
+.astro/
