@@ -18,9 +18,9 @@ export const get = () =>
     // see "Generating items" section for required frontmatter and advanced use cases
     items: posts.map(post => ({
       link: post.url,
-      title: post.frontmatter.title,
-      description: post.frontmatter.description,
-      pubDate: post.frontmatter.publishDate,
+      title: post.data.title,
+      description: post.data.description,
+      pubDate: post.data.publishDate,
     })),
     // (optional) inject custom xml
     customData: `<language>en</language>`,

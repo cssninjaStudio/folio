@@ -1,28 +1,28 @@
-import type { MarkdownInstance } from 'astro'
+import type { CollectionEntry } from 'astro:content'
 
-export interface Frontmatter {
-  draft?: boolean
-  title: string
-  description?: string
-  author?: string
-  publishDate: string
-  featured?: boolean
-  coverSVG?: string
-  coverImage?: string
-  socialImage?: string
-  categories?: string[]
-  tags?: string[]
-  file?: string
-  url?: string
-  minutesRead?: string
-  extra?: string[]
-  section?: string[]
-}
+// export interface Frontmatter {
+//   draft?: boolean
+//   title: string
+//   description?: string
+//   author?: string
+//   publishDate: string
+//   featured?: boolean
+//   coverSVG?: string
+//   coverImage?: string
+//   socialImage?: string
+//   categories?: string[]
+//   tags?: string[]
+//   file?: string
+//   url?: string
+//   minutesRead?: string
+//   extra?: string[]
+//   section?: string[]
+// }
 
 export interface TagType {
   tag: string
   count: number
-  pages: MarkdownInstance<Frontmatter>[]
+  pages: CollectionEntry<'blog'>[]
 }
 
 export const SiteMetadata = {
@@ -68,7 +68,7 @@ export const SiteMetadata = {
       icon: 'github',
     },
   ],
-  buildTime: new Date().toString(),
+  buildTime: new Date(),
 }
 
 export const Logo = '../svg/logo/logo.svg'
@@ -78,11 +78,11 @@ export const DefaultSVG = '../svg/illustrations/scenses/draw-1.svg'
 export const DefaultImage = '../images/posts/1.png'
 
 export const NavigationLinks = [
-  { name: 'Home', href: 'home' },
-  { name: 'Blog', href: 'blog' },
-  { name: 'Categories', href: 'categories' },
-  { name: 'Authors', href: 'authors' },
-  { name: 'About', href: 'about' },
+  { name: 'Home', href: '/home' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Categories', href: '/categories' },
+  { name: 'Authors', href: '/authors' },
+  { name: 'About', href: '/about' },
 ]
 
 export const CategoryDetail = [
@@ -145,9 +145,9 @@ export const CategoryDetail = [
 ]
 
 export function categoryDetail(category: string | undefined) {
-  const details = CategoryDetail.filter(cat => cat.category == category)
+  const details = CategoryDetail.filter(cat => cat.category === category)
 
-  if (details.length == 1) {
+  if (details.length === 1) {
     return details[0]
   }
   return {

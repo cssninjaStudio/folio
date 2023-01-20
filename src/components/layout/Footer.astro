@@ -11,7 +11,7 @@ import SVGImg from '@components/svgimg.astro'
       <span class="flex-none flex flex-row items-center">
         <a
           class="flex title-font font-medium items-center lg:justify-start justify-center text-muted-800 dark:text-muted-100"
-          href={import.meta.env.BASE_URL}
+          href={'/home'}
         >
           <SVGImg src={Logo} alt="Footer Logo" class="h-8 w-8" />
           <span class="sr-only">Logo</span>
@@ -31,7 +31,7 @@ import SVGImg from '@components/svgimg.astro'
       <span class="flex items-center gap-x-6">
         <p class="text-sm text-muted-600 dark:text-muted-300">
           <a
-            href={import.meta.env.BASE_URL + 'home'}
+            href={'/home'}
             class="font-sans text-sm text-muted-500 dark:text-muted-400"
             rel="noopener noreferrer"
             target="_blank"
@@ -41,7 +41,7 @@ import SVGImg from '@components/svgimg.astro'
         </p>
         <p class="text-sm text-muted-600 dark:text-muted-300">
           <a
-            href={import.meta.env.BASE_URL + 'privacy'}
+            href={`/privacy`}
             class="font-sans text-sm text-muted-500 dark:text-muted-400"
           >
             Privacy
@@ -49,7 +49,7 @@ import SVGImg from '@components/svgimg.astro'
         </p>
         <p class="text-sm text-muted-600">
           <a
-            href={import.meta.env.BASE_URL + 'rss.xml'}
+            href={'/rss.xml'}
             class="font-sans text-sm text-muted-500 dark:text-muted-400"
             rel="noopener noreferrer"
             target="_blank"

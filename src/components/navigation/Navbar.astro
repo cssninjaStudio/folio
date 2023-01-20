@@ -79,7 +79,7 @@ import SVGImg from '@components/svgimg.astro'
               {
                 NavigationLinks.map(item => (
                   <a
-                    href={import.meta.env.BASE_URL + item.href}
+                    href={item.href}
                     class={
                       (item.href.length > 0 &&
                       Astro.url.toString().includes(item.href)
@@ -157,7 +157,7 @@ import SVGImg from '@components/svgimg.astro'
           {
             NavigationLinks.map(item => (
               <a
-                href={import.meta.env.BASE_URL + item.href}
+                href={item.href}
                 class:list={[
                   item.href.length > 0 && Astro.url.toString().includes(item.href)
                     ? 'bg-primary-500/20 text-primary-500'

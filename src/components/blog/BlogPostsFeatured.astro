@@ -1,7 +1,7 @@
 ---
-import type { MarkdownInstance } from 'astro'
+import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon'
-import type { Frontmatter } from '@config'
+import { slug } from 'github-slugger'
 import { authorDetail } from '@config'
 import Section from '@components/layout/Section.astro'
 import Container from '@components/layout/Container.astro'
@@ -11,7 +11,7 @@ import SVGImg from '@components/svgimg.astro'
 import Img from '@components/img.astro'
 
 export interface Props {
-  posts: MarkdownInstance<Frontmatter>[]
+  posts: CollectionEntry<'blog'>[]
 }
 
 const { posts } = Astro.props
@@ -36,26 +36,26 @@ const headerPosts = posts.slice(0, 4)
           <Card class="p-3 rounded-xl">
             <div class="relative rounded-lg overflow-hidden">
               <div class="relative">
-                {post.frontmatter.coverSVG ? (
+                {post.data.coverSVG ? (
                   <SVGImg
-                    src={post.frontmatter.coverSVG}
-                    alt={post.frontmatter.title + ' featured image'}
+                    src={post.data.coverSVG}
+                    alt={post.data.title + ' featured image'}
                     class="block w-full h-[420px] object-cover rounded-lg"
                   />
                 ) : (
                   <Img
                     src={
-                      post.frontmatter.coverImage ||
-                      post.frontmatter.socialImage
+                      post.data.coverImage ||
+                      post.data.socialImage
                     }
-                    alt={post.frontmatter.title + ' featured image'}
+                    alt={post.data.title + ' featured image'}
                     class="block w-full h-[420px] object-cover rounded-lg"
                   />
                 )}
                 <div class="absolute top-4 right-4">
-                  {post.frontmatter.categories && (
+                  {post.data.categories && (
                     <PostCategoryBadges
-                      categories={post.frontmatter.categories}
+                      categories={post.data.categories}
                     />
                   )}
                 </div>
@@ -66,40 +66,38 @@ const headerPosts = posts.slice(0, 4)
                   <div class="flex items-center gap-2 mb-1 mt-4 text-muted-100">
                     <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
                     <p class="font-sans text-xs">
-                      {post.frontmatter.publishDate?.slice(0, 10)}
+                      {post.data.publishDate?.toISOString()?.slice(0, 10)}
                     </p>
                   </div>
                   <h3 class="font-sans font-light text-xl mb-2">
                     <a
-                      href={post.url}
+                      href={`/blog/${post.slug}`}
                       class="text-white hover:text-primary-300 transition-colors duration-300"
                     >
-                      {post.frontmatter.title}
+                      {post.data.title}
                     </a>
                   </h3>
                   <div class="flex items-center justify-between">
                     <div>
-                      {post.frontmatter.author && (
+                      {post.data.author && (
                         <span class="flex items-center gap-2">
                           <a
-                            href={`${import.meta.env.BASE_URL}author/${
-                              post.frontmatter.author
-                            }/`}
+                            href={`/authors/${slug(post.data.author)}/`}
                             class="h-8 w-8 flex items-center justify-center shrink-0 rounded-full bg-white dark:bg-muted-800"
                           >
-                            {authorDetail(post.frontmatter.author).image !==
+                            {authorDetail(post.data.author).image !==
                             undefined ? (
                               <Img
                                 src={
-                                  authorDetail(post.frontmatter.author).image
+                                  authorDetail(post.data.author).image
                                 }
-                                alt={post.frontmatter.author}
+                                alt={post.data.author}
                                 class="h-8 w-8 rounded-full object-cover scale-90"
                               />
                             ) : (
                               <SVGImg
-                                src={authorDetail(post.frontmatter.author).svg}
-                                alt={post.frontmatter.author}
+                                src={authorDetail(post.data.author).svg}
+                                alt={post.data.author}
                                 class="h-8 w-8 rounded-full object-cover scale-90"
                               />
                             )}
@@ -107,12 +105,10 @@ const headerPosts = posts.slice(0, 4)
                           <div>
                             <h4 class="font-sans text-sm">
                               <a
-                                href={`${import.meta.env.BASE_URL}author/${
-                                  post.frontmatter.author
-                                }/`}
+                                href={`/authors/${slug(post.data.author)}/`}
                                 class="text-white hover:text-primary-300 transition-colors duration-300"
                               >
-                                {post.frontmatter.author}
+                                {post.data.author}
                               </a>
                             </h4>
                           </div>

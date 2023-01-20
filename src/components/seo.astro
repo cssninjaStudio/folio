@@ -1,6 +1,6 @@
 ---
 import { SEO } from 'astro-seo'
-import type { Frontmatter } from '@config'
+import type { CollectionEntry } from 'astro:content'
 import type {
   Article,
   BreadcrumbList,
@@ -12,15 +12,15 @@ import type {
 import { SiteMetadata, DefaultImage, LogoImage } from '@config'
 
 export interface Props {
-  frontmatter: Frontmatter
+  frontmatter: CollectionEntry<'blog'>['data']
 }
 
 const { frontmatter } = Astro.props
 
 const siteurl = new URL(import.meta.env.BASE_URL, Astro.url)
 const type = Astro.url.toString().includes('blog') ? 'post' : 'page'
-const year = parseInt(SiteMetadata.buildTime.slice(0, 4))
-const images = import.meta.glob<ImageMetadata>('../images/**/*', { import: 'default' })
+const year = parseInt(SiteMetadata.buildTime.toISOString().slice(0, 4))
+const images = import.meta.glob<any>('../images/**/*', { import: 'default' })
 const image = await images[frontmatter.socialImage || frontmatter.coverImage || DefaultImage]()
 const logo = await images[LogoImage]()
 
@@ -160,9 +160,9 @@ const article: WithContext<Article> = {
   creator: {
     '@id': SiteMetadata.author.url,
   },
-  dateCreated: frontmatter.publishDate,
-  dateModified: SiteMetadata.buildTime,
-  datePublished: frontmatter.publishDate,
+  dateCreated: frontmatter.publishDate?.toISOString(),
+  dateModified: SiteMetadata.buildTime?.toISOString(),
+  datePublished: frontmatter.publishDate?.toISOString(),
   description: frontmatter.description,
   headline: frontmatter.title,
   keywords: frontmatter.tags && frontmatter.tags.join(', '),
