@@ -19,7 +19,7 @@ export default defineConfig({
       external: ['svgo'],
     },
   },
-  site: 'https://hellotham.github.io',
+  site: process.env.FRONTEND_URL || 'http://localhost:3000',
   base: '/',
   integrations: [tailwind(), sitemap(), image(), mdx(), alpinejs(), robotsTxt()],
   experimental: {
