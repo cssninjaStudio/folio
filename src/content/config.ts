@@ -19,7 +19,6 @@ const blog = defineCollection({
     categories: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
     extra: z.array(z.string()).optional(),
-    section: z.array(z.string()).optional(),
     minutesRead: z.string().default('2 min read').optional(),
     permalink: z.string().optional(),
     // url: z.string().optional(),

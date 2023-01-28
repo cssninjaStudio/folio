@@ -1,24 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
 
-// export interface Frontmatter {
-//   draft?: boolean
-//   title: string
-//   description?: string
-//   author?: string
-//   publishDate: string
-//   featured?: boolean
-//   coverSVG?: string
-//   coverImage?: string
-//   socialImage?: string
-//   categories?: string[]
-//   tags?: string[]
-//   file?: string
-//   url?: string
-//   minutesRead?: string
-//   extra?: string[]
-//   section?: string[]
-// }
-
 export interface TagType {
   tag: string
   count: number
@@ -417,7 +398,7 @@ export function authorDetail(author: string | undefined) {
 
 export const PAGE_SIZE = 12
 
-export const GITHUB_EDIT_URL = `https://github.com/hellotham/hello-astro`
+export const GITHUB_EDIT_URL = `https://github.com/cssninjaStudio/folio`
 
 export const COMMUNITY_INVITE_URL = `https://astro.build/chat`
 
