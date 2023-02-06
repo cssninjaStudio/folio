@@ -1,3 +1,21 @@
+---
+import Icon from 'astro-icon'
+---
+
+<script is:inline>
+  function collapse() {
+    return {
+      isOpen: false,
+      open() {
+        this.isOpen = true
+      },
+      close() {
+        this.isOpen = false
+      },
+    }
+  }
+</script>
+
 <div class="pb-16">
   <div class="w-full">
     <!--Section title-->
@@ -23,8 +41,9 @@
           x-data="collapse()"
           x-bind:class="isOpen && 'shadow-xl shadow-muted-400/10 dark:shadow-muted-800/10'"
         >
-          <button type="button"
-            class="flex items-center justify-between"
+          <button
+            type="button"
+            class="w-full flex items-center justify-between"
             x-on:click="open()"
           >
             <h4
@@ -33,10 +52,11 @@
             >
               What is the difference between your licenses?
             </h4>
-            <i
-              class="iconify block w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
-              data-icon="lucide:chevron-down"
-              x-bind:class="isOpen && 'rotate-180'"></i>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
+              x-bind:class="isOpen && 'rotate-180'"
+            />
           </button>
           <div
             x-show="isOpen"
@@ -88,7 +108,7 @@
         >
           <button
             type="button"
-            class="flex items-center justify-between"
+            class="w-full flex items-center justify-between"
             x-on:click="open()"
           >
             <h4
@@ -97,10 +117,11 @@
             >
               What about licensing and SaaS projects?
             </h4>
-            <i
-              class="iconify block w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
-              data-icon="lucide:chevron-down"
-              x-bind:class="isOpen && 'rotate-180'"></i>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
+              x-bind:class="isOpen && 'rotate-180'"
+            />
           </button>
           <div
             x-show="isOpen"
@@ -141,7 +162,7 @@
         >
           <button
             type="button"
-            class="flex items-center justify-between"
+            class="w-full flex items-center justify-between"
             x-on:click="open()"
           >
             <h4
@@ -150,10 +171,11 @@
             >
               What about theme customization?
             </h4>
-            <i
-              class="iconify block w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
-              data-icon="lucide:chevron-down"
-              x-bind:class="isOpen && 'rotate-180'"></i>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
+              x-bind:class="isOpen && 'rotate-180'"
+            />
           </button>
           <div
             x-show="isOpen"
@@ -182,7 +204,7 @@
         >
           <button
             type="button"
-            class="flex items-center justify-between"
+            class="w-full flex items-center justify-between"
             x-on:click="open()"
           >
             <h4
@@ -191,10 +213,11 @@
             >
               What about the support scope?
             </h4>
-            <i
-              class="iconify block w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
-              data-icon="lucide:chevron-down"
-              x-bind:class="isOpen && 'rotate-180'"></i>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
+              x-bind:class="isOpen && 'rotate-180'"
+            />
           </button>
           <div
             x-show="isOpen"
@@ -223,7 +246,7 @@
         >
           <button
             type="button"
-            class="flex items-center justify-between"
+            class="w-full flex items-center justify-between"
             x-on:click="open()"
           >
             <h4
@@ -232,10 +255,11 @@
             >
               Can I have a refund if Iam not happy?
             </h4>
-            <i
-              class="iconify block w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
-              data-icon="lucide:chevron-down"
-              x-bind:class="isOpen && 'rotate-180'"></i>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-5 min-w-[1.25rem] h-5 text-muted-500 dark:text-muted-400 transition-transform duration-300"
+              x-bind:class="isOpen && 'rotate-180'"
+            />
           </button>
           <div
             x-show="isOpen"

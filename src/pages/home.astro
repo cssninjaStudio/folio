@@ -21,16 +21,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
     b.data.publishDate.valueOf() -
     a.data.publishDate.valueOf()
 );
-// const posts = (await Astro.glob(
-//   './blog/**/*.{md,mdx}'
-// )) as MarkdownInstance<Frontmatter>[]
-// const latestPosts = posts
-//   .sort(
-//     (a, b) =>
-//       new Date(b.data.publishDate).valueOf() -
-//       new Date(a.data.publishDate).valueOf()
-//   )
-//   .filter(post => !post.data.draft)
 
 const featuredPosts = posts
   .filter(post => post.data.featured)
