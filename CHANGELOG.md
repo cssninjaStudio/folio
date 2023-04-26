@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/cssninjaStudio/folio/compare/v1.0.0...v1.0.1) (2023-04-26)
+
+
+### Bug Fixes
+
+* update dependencies ([21f45ac](https://github.com/cssninjaStudio/folio/commit/21f45ac4b29e6794289015060336979c0b259ad9))
+
 ## 1.0.0 (2023-02-07)
 
 
