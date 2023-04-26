@@ -10,7 +10,7 @@ Folio is built with [Tailwind CSS](https://tailwindcss.com/) and [Alpine JS](htt
 
 ## 👍 Features
 
-* Astro v1.x
+* Astro v2.x
 * Node.js 16/18+
 * Tailwind v3.x
 * ES6 support
