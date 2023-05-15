@@ -11,6 +11,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkPlantUML from '@akebifiky/remark-simple-plantuml'
 import { remarkReadingTime } from './remark-plugins/remark-reading-time.mjs';
 import { remarkDiagram } from './remark-plugins/remark-diagram.mjs';
+import pagefind from "astro-pagefind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +22,8 @@ export default defineConfig({
   },
   site: process.env.FRONTEND_URL || 'http://localhost:3000',
   base: '/',
-  integrations: [tailwind(), sitemap(), image(), mdx(), alpinejs(), robotsTxt()],
+  // output: 'server',
+  integrations: [tailwind(), sitemap(), image(), mdx(), alpinejs(), robotsTxt(), pagefind()],
   experimental: {
     integrations: true,
   },

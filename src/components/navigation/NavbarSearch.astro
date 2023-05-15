@@ -1,59 +1,22 @@
 ---
 import { Icon } from 'astro-icon'
+import { getCollection } from 'astro:content'
+const posts = await getCollection('blog')
+const searchText = 'ux'
 ---
 
-<script is:inline src="https://unpkg.com/lunr/lunr.min.js"></script>
-<div
-  x-data={`
-  {
-    searchResults: false,
-    searchText: '',
-    idx: null,
-    doc: null,
-    async lunr_search(term) {
-      if (!this.doc) {
-        const res = await fetch(import.meta.env.BASE_URL + 'search-docs.json')
-        this.doc = await res.json()
-      }
-      if (!this.idx) {
-        const res = await fetch(import.meta.env.BASE_URL + 'search-index.json')
-        const data = await res.json()
-        this.idx = lunr.Index.load(data)
-      }
-      document.getElementById('lunrsearchresults').innerHTML = '<ul class="relative space-y-8"></ul>'
-      if (term) {
-        document.getElementById('lunrsearchtitle').innerHTML =
-          "Post results for '" + term + "'"
-        //put results on the screen.
-        const results = this.idx.search(term)
-        if (results.length > 0) {
-          //if results
-          for (var i = 0; i < results.length; i++) {
-            // more statements
-            const url = results[i]['ref']
-            const doc = this.doc.filter(doc => doc.url == url)[0]
-            document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML =
-              document.querySelectorAll('#lunrsearchresults ul')[0]
-                .innerHTML +
-              '<li class="group max-w-[340px] -m-3 p-3 flex items-start"><a href="' +
-              url +
-              '"><p class="mb-2 text-base font-medium text-muted-900 dark:text-muted-100 group-hover:text-primary-500 dark:group-hover:text-primary-500 transition-colors duration-300">' +
-              doc.title +
-              '<p><p class="mt-1 text-xs text-muted-500 dark:text-muted-400">' +
-              doc.description +
-              '</p></a></li>'
-          }
-        } else {
-          document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML =
-            '<div class="flex flex-col text-center py-6"><svg class="w-10 h-10 mx-auto mb-2 text-primary-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g fill="currentColor"><path d="M0 16c0 8.822 7.178 16 16 16s16-7.178 16-16S24.822 0 16 0S0 7.178 0 16zM16 1c8.271 0 15 6.729 15 15s-6.729 15-15 15S1 24.271 1 16S7.729 1 16 1z"/><path d="M16 29c7.168 0 13-5.832 13-13S23.168 3 16 3S3 8.832 3 16s5.832 13 13 13zM15 4.051v1.526a.5.5 0 0 0 1 0V4c6.279 0 11.438 4.85 11.949 11h-1.527a.5.5 0 0 0 0 1H28c0 6.617-5.383 12-12 12v-1.577a.5.5 0 0 0-1 0v1.526C8.851 27.438 4 22.28 4 16h1.578a.5.5 0 0 0 0-1H4.051C4.534 9.181 9.181 4.534 15 4.051z"/><path d="M9.386 23.041a.5.5 0 0 0 .292-.094l5.614-4.036c.228.056.463.093.708.093c1.654 0 3-1.346 3-3a3 3 0 0 0-.087-.687l4.106-5.712a.501.501 0 0 0-.698-.699l-5.778 4.153a2.96 2.96 0 0 0-.544-.055c-1.654 0-3 1.346-3 3c0 .195.022.386.058.571L8.98 22.249a.501.501 0 0 0 .406.792zM14 16.005c0-1.103.897-2 2-2s2 .897 2 2s-.897 2-2 2s-2-.898-2-2zm6.424-4.502l-1.987 2.765a3.025 3.025 0 0 0-.792-.767l2.779-1.998zm-6.919 6.164c.199.298.454.553.743.763l-2.672 1.921l1.929-2.684z"/></g></svg><h3 class="font-sans font-semibold text-muted-800 dark:text-white">No results</h3><p class="font-sans text-sm text-muted-500 dark:text-muted-400">No matching results found...</p></div>'
-        }
-      }
-
-      return false
-    },
+<script is:inline>
+  function searchPosts() {
+    return {
+      searchResults: false,
+      searchOpen: false,
+      searchText: '',
+      search(term) {},
+    }
   }
-`}
->
+</script>
+
+<div x-data="searchPosts()">
   <div
     class="ltablet:flex lg:flex justify-center"
     x-bind:class="searchOpen ? 'fixed top-16 left-0 h-16 w-full flex sm:hidden ptablet:flex items-center -m-1 bg-white dark:bg-muted-800' : 'hidden'"
@@ -65,8 +28,8 @@ import { Icon } from 'astro-icon'
       <div class="input-group relative flex items-center w-full">
         <div class="relative" x-bind:class="searchOpen ? 'w-full' : ''">
           <input
+            id="searchInput"
             x-model="searchText"
-            id="lunrsearch"
             name="q"
             maxlength="255"
             value=""
@@ -77,10 +40,10 @@ import { Icon } from 'astro-icon'
               scrolled ? 'dark:bg-muted-700 dark:text-muted-200 dark:border-muted-600' : 'dark:bg-muted-800 dark:text-muted-200 dark:border-muted-700',
             ]"
             placeholder="Search posts..."
-            x-on:keyup.enter="lunr_search(searchText); searchResults = true"
+            x-on:keyup.enter="search(searchText); searchResults = true"
           />
           <button
-            x-on:click="lunr_search(searchText); searchResults = true"
+            x-on:click="search(searchText); searchResults = true"
             aria-label="Search Button"
             name="search"
             type="button"
@@ -197,7 +160,44 @@ import { Icon } from 'astro-icon'
                   </div>
                   <div id="lunrsearchmodal" class="relative">
                     <div id="lunrsearchresults" class="overflow-hidden">
-                      <ul class="space-y-8"></ul>
+                   
+                      {
+                        posts.length === 0 ? (
+                          <div class="flex flex-col text-center py-6">
+                            <h3 class="font-sans font-semibold text-muted-800 dark:text-white">
+                              No results
+                            </h3>
+                            <>
+                              <svg
+                                class="w-10 h-10 mx-auto mb-2 text-primary-500"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 32 32"
+                              >
+                                <g fill="currentColor">
+                                  <path d="M16 29c7.168 0 13-5.832 13-13S23.168 3 16 3S3 8.832 3 16s5.832 13 13 13zM15 4.051v1.526a.5.5 0 0 0 1 0V4c6.279 0 11.438 4.85 11.949 11h-1.527a.5.5 0 0 0 0 1H28c0 6.617-5.383 12-12 12v-1.577a.5.5 0 0 0-1 0v1.526C8.851 27.438 4 22.28 4 16h1.578a.5.5 0 0 0 0-1H4.051C4.534 9.181 9.181 4.534 15 4.051z" />
+                                  <>
+                                    <path d="M0 16c0 8.822 7.178 16 16 16s16-7.178 16-16S24.822 0 16 0S0 7.178 0 16zM16 1c8.271 0 15 6.729 15 15s-6.729 15-15 15S1 24.271 1 16S7.729 1 16 1z" />
+                                    <path d="M9.386 23.041a.5.5 0 0 0 .292-.094l5.614-4.036c.228.056.463.093.708.093c1.654 0 3-1.346 3-3a3 3 0 0 0-.087-.687l4.106-5.712a.501.501 0 0 0-.698-.699l-5.778 4.153a2.96 2.96 0 0 0-.544-.055c-1.654 0-3 1.346-3 3c0 .195.022.386.058.571L8.98 22.249a.501.501 0 0 0 .406.792zM14 16.005c0-1.103.897-2 2-2s2 .897 2 2s-.897 2-2 2s-2-.898-2-2zm6.424-4.502l-1.987 2.765a3.025 3.025 0 0 0-.792-.767l2.779-1.998zm-6.919 6.164c.199.298.454.553.743.763l-2.672 1.921l1.929-2.684z" />
+                                  </>
+                                </g>
+                              </svg>
+                              <p class="font-sans text-sm text-muted-500 dark:text-muted-400">
+                                No matching results found...
+                              </p>
+                            </>
+                          </div>
+                        ) : (
+                          <ul class="space-y-8">
+                            {posts.filter(post => post.data.title.toLowerCase().includes(searchText.toLowerCase())).map(post => (
+                              <li>
+                                <pre>{JSON.stringify(post, null, 2)}</pre>
+                              </li>
+                            ))}
+                          </ul>
+                        )
+                      }
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon'
 import { NavigationLinks, Logo } from '@config'
 import Container from '@components/layout/Container.astro'
 import NavbarSearch from '@components/navigation/NavbarSearch.astro'
+import PageFindSearch from '@components/navigation/PageFindSearch.astro'
 import NavbarTheme from '@components/navigation/NavbarTheme.astro'
 import SVGImg from '@components/svgimg.astro'
 ---
@@ -35,8 +36,12 @@ import SVGImg from '@components/svgimg.astro'
 >
   <div class="w-full px-4 lg:px-6">
     <Container>
-      <div class="relative flex items-center ltablet:justify-start justify-between h-16">
-        <div class="flex-1 ltablet:flex-none lg:flex-none flex items-center lg:hidden">
+      <div
+        class="relative flex items-center ltablet:justify-start justify-between h-16"
+      >
+        <div
+          class="flex-1 ltablet:flex-none lg:flex-none flex items-center lg:hidden"
+        >
           <!-- Mobile menu button-->
           <button
             type="button"
@@ -62,17 +67,30 @@ import SVGImg from '@components/svgimg.astro'
             />
           </button>
           <!-- Mobile search -->
-          <button class="h-16 w-16 items-center justify-center text-muted-400"
-            x-bind:class="searchOpen ? 'hidden' : 'flex ptablet:flex sm:hidden'" 
-            x-on:click="searchOpen = true">
+          <button
+            class="h-16 w-16 items-center justify-center text-muted-400"
+            x-bind:class="searchOpen ? 'hidden' : 'flex ptablet:flex sm:hidden'"
+            x-on:click="searchOpen = true"
+          >
             <Icon name="lucide:search" class="w-12 h-12" />
+          </button>
+          <button
+            class="h-16 w-16 items-center justify-center text-muted-400"
+            x-bind:class="!searchOpen ? 'hidden' : 'flex ptablet:flex sm:hidden'"
+            x-on:click="searchOpen = false"
+          >
+            <Icon name="lucide:eye-off" class="w-5 h-5" />
           </button>
         </div>
         <div
           class="flex-1 ltablet:flex-none lg:flex-none flex items-center justify-center lg:items-stretch lg:justify-start ltablet:ml-6"
         >
           <div class="flex-shrink-0 flex items-center">
-            <SVGImg class="block h-9 w-9 lg:h-10 sm:w-10" src={Logo} alt="Logo" />
+            <SVGImg
+              class="block h-9 w-9 lg:h-10 sm:w-10"
+              src={Logo}
+              alt="Logo"
+            />
           </div>
           <div class="hidden lg:flex items-center lg:ml-6">
             <div class="h-9 flex gap-x-4">
@@ -101,8 +119,39 @@ import SVGImg from '@components/svgimg.astro'
             </div>
           </div>
         </div>
-        <div class="flex-1 ltablet:flex-none lg:flex-none ltablet:ml-auto lg:ml-auto flex items-center ptablet:justify-end ltablet:justify-end lg:justify-end gap-4 sm:static">
-          <NavbarSearch />
+        <div
+          class="flex-1 ltablet:flex-none lg:flex-none ltablet:ml-auto lg:ml-auto flex items-center ptablet:justify-end ltablet:justify-end lg:justify-end gap-4 sm:static"
+        >
+          <div
+            class="relative group"
+            x-bind:class="searchOpen ? '!fixed top-16 left-0 h-16 px-5 w-full flex sm:hidden ptablet:flex items-center -m-1 bg-white dark:bg-muted-800' : 'hidden ltablet:block lg:block'"
+          >
+            <div
+              class="absolute z-20 top-3 left-5 ltablet:top-0 ltablet:left-0 lg:top-0 lg:left-0 h-10 w-10 flex justify-center items-center text-muted-400 group-focus-within:text-violet-500 transition-colors duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                aria-hidden="true"
+                role="img"
+                class="h-4 w-4"
+                width="32"
+                height="32"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 24 24"
+                ><g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  ><circle cx="11" cy="11" r="8"></circle><path
+                    d="m21 21l-4.35-4.35"></path></g
+                ></svg
+              >
+            </div>
+            <PageFindSearch />
+          </div>
           <NavbarTheme />
 
           <!-- Right nav -->
@@ -159,13 +208,15 @@ import SVGImg from '@components/svgimg.astro'
               <a
                 href={item.href}
                 class:list={[
-                  item.href.length > 0 && Astro.url.toString().includes(item.href)
+                  item.href.length > 0 &&
+                  Astro.url.toString().includes(item.href)
                     ? 'bg-primary-500/20 text-primary-500'
                     : 'text-muted-500 dark:text-muted-400',
                   ' font-sans py-3 px-4 rounded-lg',
                 ]}
                 aria-current={
-                  item.href.length > 0 && Astro.url.toString().includes(item.href)
+                  item.href.length > 0 &&
+                  Astro.url.toString().includes(item.href)
                     ? 'page'
                     : undefined
                 }
