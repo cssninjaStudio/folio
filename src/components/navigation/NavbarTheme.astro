@@ -6,40 +6,65 @@ import { Icon } from 'astro-icon'
   function ThemeSwitcher() {
     return {
       currentTheme: 'system',
-      toggleTheme(e) {
-        const theme = e.target.getAttribute('data-theme')
+      toggleTheme(theme) {
         this.currentTheme = theme
+        localStorage.setItem('theme', this.currentTheme)
         if (theme === 'system') {
-          localStorage.removeItem('theme')
-          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          if (
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          ) {
             document.documentElement.classList.add('dark')
           } else {
             document.documentElement.classList.remove('dark')
           }
+        } else if (theme === 'dark') {
+          document.documentElement.classList.add('dark')
+        } else if (theme === 'light') {
+          document.documentElement.classList.remove('dark')
         } else {
-          localStorage.theme = theme
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark')
-          } else {
-            document.documentElement.classList.remove('dark')
-          }
+          return
         }
+        
       },
       init() {
-        console.log(this.currentTheme)
+        if (!localStorage.getItem('theme')) {
+          localStorage.setItem('theme', 'system')
+        }
+        this.currentTheme = localStorage.getItem('theme')
+
+        if (this.currentTheme === 'system') {
+          if (
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          ) {
+            document.documentElement.classList.add('dark')
+          } else {
+            document.documentElement.classList.remove('dark')
+          }
+        } else if (this.currentTheme === 'dark') {
+          document.documentElement.classList.add('dark')
+        } else if (this.currentTheme === 'light') {
+          document.documentElement.classList.remove('dark')
+        } else {
+          return
+        }
       },
     }
   }
 </script>
 
-<div class="relative p-1 rounded-full max-w-[104px] bg-muted-100 dark:bg-muted-900" x-data="ThemeSwitcher()">
+<div
+  class="relative p-1 rounded-full max-w-[104px] bg-muted-100 dark:bg-muted-900"
+  x-data="ThemeSwitcher()"
+>
   <div x-cloak class="relative flex">
     <button
       class="relative z-10 h-8 w-8 flex items-center justify-center"
       id="theme-option-0"
       role="option"
       data-theme="system"
-      x-on:click="toggleTheme($event)"
+      x-on:click="toggleTheme('system')"
     >
       <span class="pointer-events-none">
         <Icon
@@ -54,7 +79,7 @@ import { Icon } from 'astro-icon'
       id="theme-option-1"
       role="option"
       data-theme="light"
-      x-on:click="toggleTheme($event)"
+      x-on:click="toggleTheme('light')"
     >
       <span class="pointer-events-none">
         <Icon
@@ -69,7 +94,7 @@ import { Icon } from 'astro-icon'
       id="theme-option-2"
       role="option"
       data-theme="dark"
-      x-on:click="toggleTheme($event)"
+      x-on:click="toggleTheme('dark')"
     >
       <span class="pointer-events-none">
         <Icon
