@@ -1,7 +1,7 @@
 {
   "name": "folio",
   "description": "Folio is a full featured Astro blog starter theme written in Typescript and TailwindCSS. It supports Markdown and MDX based pages and blog posts.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/cssninjaStudio/folio/compare/v1.0.1...v1.1.0) (2023-05-15)
+
+
+### Features
+
+* add PageFind client search, deprecate NavbarSearch component ([b264b55](https://github.com/cssninjaStudio/folio/commit/b264b55cf6594060de51a7c7c55894bbf42b57ba))
+
+
+### Bug Fixes
+
+* persist theme setting on page change ([f274913](https://github.com/cssninjaStudio/folio/commit/f274913a9d05a2c0d7e0b9996ba690917e0781aa))
+
 ### [1.0.1](https://github.com/cssninjaStudio/folio/compare/v1.0.0...v1.0.1) (2023-04-26)
 
 
