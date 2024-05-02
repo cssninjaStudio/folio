@@ -6,8 +6,8 @@ minutesRead: 3 minutes read
 author: Clarissa Stokes
 publishDate: 2022-08-28T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/1.png
-socialImage: ../images/posts/1.png
+coverImage: /images/posts/1.png
+socialImage: /images/posts/1.png
 categories:
   - human resources
 tags:

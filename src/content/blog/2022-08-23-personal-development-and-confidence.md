@@ -6,8 +6,8 @@ minutesRead: 7 minutes read
 author: Irina Kropova
 publishDate: 2022-08-28T00:00:00.000Z
 featured: true
-coverImage: ../images/posts/4.png
-socialImage: ../images/posts/4.png
+coverImage: /images/posts/4.png
+socialImage: /images/posts/4.png
 categories:
   - coaching
 tags:

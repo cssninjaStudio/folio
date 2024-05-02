@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 ---
 
 <script is:inline>
@@ -10,10 +10,7 @@ import { Icon } from 'astro-icon'
         this.currentTheme = theme
         localStorage.setItem('theme', this.currentTheme)
         if (theme === 'system') {
-          if (
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-          ) {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark')
           } else {
             document.documentElement.classList.remove('dark')
@@ -25,7 +22,6 @@ import { Icon } from 'astro-icon'
         } else {
           return
         }
-        
       },
       init() {
         if (!localStorage.getItem('theme')) {
@@ -34,10 +30,7 @@ import { Icon } from 'astro-icon'
         this.currentTheme = localStorage.getItem('theme')
 
         if (this.currentTheme === 'system') {
-          if (
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-          ) {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark')
           } else {
             document.documentElement.classList.remove('dark')
@@ -54,63 +47,30 @@ import { Icon } from 'astro-icon'
   }
 </script>
 
-<div
-  class="relative p-1 rounded-full max-w-[104px] bg-muted-100 dark:bg-muted-900"
-  x-data="ThemeSwitcher()"
->
+<div class="relative p-1 rounded-full max-w-[104px] bg-muted-100 dark:bg-muted-900" x-data="ThemeSwitcher()">
   <div x-cloak class="relative flex">
-    <button
-      class="relative z-10 h-8 w-8 flex items-center justify-center"
-      id="theme-option-0"
-      role="option"
-      data-theme="system"
-      x-on:click="toggleTheme('system')"
-    >
+    <button class="relative z-10 h-8 w-8 flex items-center justify-center" id="theme-option-0" role="option" data-theme="system" x-on:click="toggleTheme('system')">
       <span class="pointer-events-none">
-        <Icon
-          class="h-4 w-4"
-          x-bind:class="currentTheme === 'system' ? 'text-primary-500' : 'text-muted-400 dark:text-muted-600'"
-          name="ph:monitor-duotone"
-        />
+        <Icon class="h-4 w-4" x-bind:class="currentTheme === 'system' ? 'text-primary-500' : 'text-muted-400 dark:text-muted-600'" name="ph:monitor-duotone" />
       </span>
     </button>
-    <button
-      class="relative z-10 h-8 w-8 flex items-center justify-center"
-      id="theme-option-1"
-      role="option"
-      data-theme="light"
-      x-on:click="toggleTheme('light')"
-    >
+    <button class="relative z-10 h-8 w-8 flex items-center justify-center" id="theme-option-1" role="option" data-theme="light" x-on:click="toggleTheme('light')">
       <span class="pointer-events-none">
-        <Icon
-          class="h-4 w-4"
-          name="ph:sun-duotone"
-          x-bind:class="currentTheme === 'light' ? 'text-yellow-400' : 'text-muted-400 dark:text-muted-600'"
-        />
+        <Icon class="h-4 w-4" name="ph:sun-duotone" x-bind:class="currentTheme === 'light' ? 'text-yellow-400' : 'text-muted-400 dark:text-muted-600'" />
       </span>
     </button>
-    <button
-      class="relative z-10 h-8 w-8 flex items-center justify-center"
-      id="theme-option-2"
-      role="option"
-      data-theme="dark"
-      x-on:click="toggleTheme('dark')"
-    >
+    <button class="relative z-10 h-8 w-8 flex items-center justify-center" id="theme-option-2" role="option" data-theme="dark" x-on:click="toggleTheme('dark')">
       <span class="pointer-events-none">
-        <Icon
-          class="h-4 w-4"
-          name="ph:moon-duotone"
-          x-bind:class="currentTheme === 'dark' ? 'text-yellow-400' : 'text-muted-400 dark:text-muted-600'"
-        />
+        <Icon class="h-4 w-4" name="ph:moon-duotone" x-bind:class="currentTheme === 'dark' ? 'text-yellow-400' : 'text-muted-400 dark:text-muted-600'" />
       </span>
     </button>
     <div
       class="absolute top-0 left-0 w-8 h-8 rounded-full bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 z-0 transition-all duration-300"
-      x-bind:class="[
+      x-bind:class=`[
         currentTheme === 'system' ? 'ml-0' : '',
         currentTheme === 'light' ? 'ml-[33.3%]' : '',
         currentTheme === 'dark' ? 'ml-[66.6%]' : '',
-      ]"
+      ]`
     >
     </div>
   </div>

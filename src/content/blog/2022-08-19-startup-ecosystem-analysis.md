@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Harold Miller
 publishDate: 2022-08-19T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/12.png
-socialImage: ../images/posts/12.png
+coverImage: /images/posts/12.png
+socialImage: /images/posts/12.png
 categories:
   - business
 tags:

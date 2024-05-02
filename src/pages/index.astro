@@ -14,7 +14,7 @@ import DemoTechs from '@components/demo/DemoTechs.astro'
 const frontmatter = {
   title: SiteMetadata.title,
   description: SiteMetadata.description,
-  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  coverImage: '/svg/illustrations/scenes/draw-1.svg',
   socialImage: undefined,
   publishDate: SiteMetadata.buildTime,
 }
@@ -27,9 +27,7 @@ const frontmatter = {
   <section class="w-full py-12 px-4 bg-white dark:bg-muted-900">
     <div class="w-full max-w-7xl mx-auto">
       <!--Layout-->
-      <div
-        class="w-full flex flex-col ltablet:flex-row lg:flex-row gap-0 ltablet:gap-10 lg:gap-28"
-      >
+      <div class="w-full flex flex-col ltablet:flex-row lg:flex-row gap-0 ltablet:gap-10 lg:gap-28">
         <!--Column-->
         <div class="w-full ltablet:w-8/12 lg:w-8/12">
           <!--Techs-->

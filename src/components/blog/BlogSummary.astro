@@ -1,15 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { slug } from 'github-slugger'
 import { authorDetail } from '@config'
 import Container from '@components/layout/Container.astro'
 import Section from '@components/layout/Section.astro'
 import Card from '@components/base/Card.astro'
 import PostCategoryBadges from '@components/blog/PostCategoryBadges.astro'
-import SVGImg from '@components/svgimg.astro'
-import Img from '@components/img.astro'
-// import Img from '@components/base/Img.astro'
 
 export interface Props {
   posts: CollectionEntry<'blog'>[]
@@ -26,15 +23,8 @@ const otherPosts = posts.slice(1, 5)
     <div class="w-full p-0 ltablet:p-6 lg:p-10 rounded-3xl ltablet:bg-muted-100 ltablet:dark:bg-muted-700/10 lg:bg-muted-100 lg:dark:bg-muted-700/10">
       <div class="max-w-6xl mx-auto relative flex flex-col md:flex-row items-center justify-between gap-y-4 mb-6">
         <div class="max-w-lg ptablet:max-w-md md:max-w-xl space-y-2">
-          <h2
-            class="font-sans font-medium text-3xl text-muted-700 dark:text-white"
-          >
-            Latest posts
-          </h2>
-          <p class="font-sans ptablet:text-sm text-muted-500 dark:text-muted-400">
-            Stay informed with our latest posts: a curated selection of the
-            freshest and most relevant content on our blog
-          </p>
+          <h2 class="font-sans font-medium text-3xl text-muted-700 dark:text-white">Latest posts</h2>
+          <p class="font-sans ptablet:text-sm text-muted-500 dark:text-muted-400">Stay informed with our latest posts: a curated selection of the freshest and most relevant content on our blog</p>
         </div>
         <div class="w-full md:w-auto flex justify-start md:justify-end gap-4">
           <a
@@ -64,53 +54,24 @@ const otherPosts = posts.slice(1, 5)
             <div class="relative">
               <a href={`/blog/${newestPost.slug}`} class="block">
                 <span class="sr-only">{newestPost.data.title}</span>
-                {
-                  newestPost.data.coverSVG ? (
-                    <SVGImg
-                      src={newestPost.data.coverSVG}
-                      alt={newestPost.data.title + ' featured image'}
-                      class="rounded-lg w-full h-64 md:h-80 object-cover"
-                    />
-                  ) : (
-                    <Img
-                      src={
-                        newestPost.data.coverImage ||
-                        newestPost.data.socialImage
-                      }
-                      alt={newestPost.data.title + ' featured image'}
-                      class="rounded-lg w-full h-64 md:h-80 object-cover"
-                    />
-                  )
-                }
+                <img src={newestPost.data.coverImage || newestPost.data.socialImage} alt={newestPost.data.title + ' featured image'} class="rounded-lg w-full h-64 md:h-80 object-cover" />
               </a>
               <div class="absolute top-4 right-4">
-                {
-                  newestPost.data.categories && (
-                    <PostCategoryBadges
-                      categories={newestPost.data.categories}
-                    />
-                  )
-                }
+                {newestPost.data.categories && <PostCategoryBadges categories={newestPost.data.categories} />}
               </div>
             </div>
-            <div
-              class="flex items-center gap-2 mb-2 mt-4 text-muted-500 dark:text-muted-400"
-            >
+            <div class="flex items-center gap-2 mb-2 mt-4 text-muted-500 dark:text-muted-400">
               <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
               <p class="font-sans text-sm">
                 {newestPost.data.publishDate?.toISOString()?.slice(0, 10)}
               </p>
             </div>
             <a href={`/blog/${newestPost.slug}`}>
-              <h2
-                class="font-sans font-medium text-xl text-muted-700 dark:text-white mb-2"
-              >
+              <h2 class="font-sans font-medium text-xl text-muted-700 dark:text-white mb-2">
                 {newestPost.data.title}
               </h2>
             </a>
-            <p
-              class="line-clamp-3 font-sans text-sm text-muted-500 dark:text-muted-400 mb-4"
-            >
+            <p class="line-clamp-3 font-sans text-sm text-muted-500 dark:text-muted-400 mb-4">
               {newestPost.data.description}
             </p>
             <div class="flex items-center justify-between">
@@ -118,45 +79,22 @@ const otherPosts = posts.slice(1, 5)
                 {
                   newestPost.data.author && (
                     <span class="flex items-center leading-tight">
-                      {authorDetail(newestPost.data.author).image !==
-                      undefined ? (
-                        <Img
-                          src={
-                            authorDetail(newestPost.data.author).image
-                          }
-                          alt={newestPost.data.author}
-                          class="h-11 w-11 rounded-full mr-2 object-cover"
-                        />
-                      ) : (
-                        <SVGImg
-                          src={authorDetail(newestPost.data.author).svg}
-                          alt={newestPost.data.author}
-                          class="h-11 w-11 rounded-full mr-2 object-cover"
-                        />
-                      )}
+                      <img src={authorDetail(newestPost.data.author).image} alt={newestPost.data.author} class="h-11 w-11 rounded-full mr-2 object-cover" />
                       <div>
                         <h4 class="font-sans text-sm text-muted-800 dark:text-muted-100">
                           <a href={`/authors/${slug(newestPost.data.author)}/`}>{newestPost.data.author}</a>
                         </h4>
-                        <p class="font-sans text-xs text-muted-400">
-                          Article author
-                        </p>
+                        <p class="font-sans text-xs text-muted-400">Article author</p>
                       </div>
                     </span>
                   )
                 }
               </div>
               <div class="flex">
-                <a
-                  href={`/blog/${newestPost.slug}`}
-                  class="group relative flex items-center gap-2 font-sans text-sm text-primary-500 transition-colors duration-300"
-                >
+                <a href={`/blog/${newestPost.slug}`} class="group relative flex items-center gap-2 font-sans text-sm text-primary-500 transition-colors duration-300">
                   <span class="sr-only">{newestPost.data.title}</span>
                   <span>Read More</span>
-                  <Icon
-                    name="lucide:arrow-right"
-                    class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-300"
-                  />
+                  <Icon name="lucide:arrow-right" class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-300" />
                 </a>
               </div>
             </div>
@@ -170,63 +108,23 @@ const otherPosts = posts.slice(1, 5)
                   <Card class="p-3 rounded-lg">
                     <div class="relative">
                       <a href={`/blog/${post.slug}`} class="block">
-                        {post.data.coverSVG ? (
-                          <SVGImg
-                            src={post.data.coverSVG}
-                            alt={post.data.title + ' featured image'}
-                            class="block lg:block rounded-md w-full h-64 md:h-40 object-cover"
-                          />
-                        ) : (
-                          <Img
-                            src={
-                              post.data.coverImage ||
-                              post.data.socialImage
-                            }
-                            alt={post.data.title + ' featured image'}
-                            class="block lg:block rounded-md w-full h-64 md:h-40 object-cover"
-                          />
-                        )}
+                        <img src={post.data.coverImage || post.data.socialImage} alt={post.data.title + ' featured image'} class="block lg:block rounded-md w-full h-64 md:h-40 object-cover" />
                       </a>
-                      <div class="absolute top-4 right-4 scale-90">
-                        {post.data.categories && (
-                          <PostCategoryBadges
-                            categories={post.data.categories}
-                          />
-                        )}
-                      </div>
+                      <div class="absolute top-4 right-4 scale-90">{post.data.categories && <PostCategoryBadges categories={post.data.categories} />}</div>
                     </div>
 
                     <div class="flex items-center gap-2 mb-1 mt-4 text-muted-500 dark:text-muted-400">
                       <Icon name="ph:calendar-blank-duotone" class="w-4 h-4" />
-                      <p class="font-sans text-xs">
-                        {post.data.publishDate?.toISOString()?.slice(0, 10)}
-                      </p>
+                      <p class="font-sans text-xs">{post.data.publishDate?.toISOString()?.slice(0, 10)}</p>
                     </div>
                     <a href={`/blog/${post.slug}`}>
-                      <h3 class="line-clamp-1 font-sans font-medium text-base text-muted-700 dark:text-white mb-3">
-                        {post.data.title}
-                      </h3>
+                      <h3 class="line-clamp-1 font-sans font-medium text-base text-muted-700 dark:text-white mb-3">{post.data.title}</h3>
                     </a>
                     <div class="flex items-center justify-between">
                       <div>
                         {post.data.author && (
                           <span class="flex items-center mr-6">
-                            {authorDetail(post.data.author).image !==
-                            undefined ? (
-                              <Img
-                                src={
-                                  authorDetail(post.data.author).image
-                                }
-                                alt={post.data.author}
-                                class="h-8 w-8 rounded-full mr-2 object-cover"
-                              />
-                            ) : (
-                              <SVGImg
-                                src={authorDetail(post.data.author).svg}
-                                alt={post.data.author}
-                                class="h-8 w-8 rounded-full mr-2 object-cover"
-                              />
-                            )}
+                            <img src={authorDetail(post.data.author).image} alt={post.data.author} class="h-8 w-8 rounded-full mr-2 object-cover" />
                             <div>
                               <h4 class="font-sans text-xs text-muted-800 dark:text-muted-100">
                                 <a href={`/authors/${slug(post.data.author)}/`}>{post.data.author}</a>
@@ -236,16 +134,10 @@ const otherPosts = posts.slice(1, 5)
                         )}
                       </div>
                       <div class="flex ltablet:hidden">
-                        <a
-                          href={`/blog/${post.slug}`}
-                          class="group relative flex items-center gap-2 font-sans text-xs text-primary-500 transition-colors duration-300"
-                        >
+                        <a href={`/blog/${post.slug}`} class="group relative flex items-center gap-2 font-sans text-xs text-primary-500 transition-colors duration-300">
                           <span class="sr-only">{post.data.title}</span>
                           <span>Read More</span>
-                          <Icon
-                            name="lucide:arrow-right"
-                            class="w-3 h-3 -translate-x-1 group-hover:translate-x-0 transition-transform duration-300"
-                          />
+                          <Icon name="lucide:arrow-right" class="w-3 h-3 -translate-x-1 group-hover:translate-x-0 transition-transform duration-300" />
                         </a>
                       </div>
                     </div>

@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Clark Smith
 publishDate: 2022-07-16T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/18.png
-socialImage: ../images/posts/18.png
+coverImage: /images/posts/18.png
+socialImage: /images/posts/18.png
 categories:
   - engineering
 tags:

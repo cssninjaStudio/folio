@@ -6,8 +6,8 @@ minutesRead: 3 minutes read
 author: Clark Smith
 publishDate: 2022-08-28T00:00:00.000Z
 featured: true
-coverImage: ../images/posts/5.png
-socialImage: ../images/posts/5.png
+coverImage: /images/posts/5.png
+socialImage: /images/posts/5.png
 categories:
   - coaching
 tags:

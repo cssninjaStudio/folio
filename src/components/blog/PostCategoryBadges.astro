@@ -11,10 +11,7 @@ const { categories } = Astro.props
   categories && (
     <div class="flex flex-row flex-wrap items-start gap-2">
       {categories.map(category => (
-        <a
-          href={`/categories/${slug(category)}/`}
-          class="inline-block font-sans text-xs capitalize text-white py-1 px-3 rounded-full bg-primary-500 shadow-lg shadow-primary-500/20"
-        >
+        <a href={`/categories/${slug(category)}/`} class="inline-block font-sans text-xs capitalize text-white py-1 px-3 rounded-full bg-primary-500 shadow-lg shadow-primary-500/20">
           {category}
           <span class="sr-only">category</span>
         </a>

@@ -25,23 +25,21 @@ import NavbarTheme from '@components/navigation/NavbarTheme.astro'
         input.focus()
       },
       initScrollAnchors() {
-        document
-          .querySelectorAll('.scroll-link[href^="#"]')
-          .forEach(trigger => {
-            trigger.onclick = function (e) {
-              e.preventDefault()
-              let hash = this.getAttribute('href')
-              let target = document.querySelector(hash)
-              let headerOffset = 100
-              let elementPosition = target.offsetTop
-              let offsetPosition = elementPosition - headerOffset
+        document.querySelectorAll('.scroll-link[href^="#"]').forEach(trigger => {
+          trigger.onclick = function (e) {
+            e.preventDefault()
+            let hash = this.getAttribute('href')
+            let target = document.querySelector(hash)
+            let headerOffset = 100
+            let elementPosition = target.offsetTop
+            let offsetPosition = elementPosition - headerOffset
 
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth',
-              })
-            }
-          })
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            })
+          }
+        })
       },
     }
   }
@@ -52,85 +50,57 @@ import NavbarTheme from '@components/navigation/NavbarTheme.astro'
   x-data="navbar()"
   x-init="initScrollAnchors()"
   x-on:scroll.window="scroll()"
-  x-bind:class="{
+  x-bind:class=`{
         'bg-white dark:bg-muted-800 shadow-lg shadow-muted-400/10 dark:shadow-muted-800/10': scrolled,
         '': !scrolled,
         'bg-white dark:bg-muted-800': mobileOpen,
         '': !mobileOpen
-    }"
+    }`
 >
-  <div
-    class="w-full max-w-7xl mx-auto flex flex-wrap py-2 flex-row items-center sm:justify-between"
-  >
+  <div class="w-full max-w-7xl mx-auto flex flex-wrap py-2 flex-row items-center sm:justify-between">
     <div class="flex justify-between items-center w-full lg:w-1/4">
-      <a
-        href="/"
-        class="group flex title-font font-light items-center gap-2 text-muted-900 dark:text-muted-100"
-      >
-        <div
-          class="h-12 w-12 flex items-center justify-center group-hover:text-primary-500 transition-colors duration-300"
-        >
+      <a href="/" class="group flex title-font font-light items-center gap-2 text-muted-900 dark:text-muted-100">
+        <div class="h-12 w-12 flex items-center justify-center group-hover:text-primary-500 transition-colors duration-300">
           <!-- Logo -->
-          <img
-            class="h-10"
-            src="/img/logo/logo.svg"
-            alt="Folio logo"
-            width="40"
-            height="40"
-          />
+          <img class="h-10" src="/img/logo/logo.svg" alt="Folio logo" width="40" height="40" />
         </div>
-        <span class="text-lg tracking-wider">Folio</span>
+        <span class="text-xl font-semibold tracking-wider">Folio</span>
       </a>
 
       <!-- Hamburger -->
-      <button
-        type="button"
-        class="flex relative justify-center items-center ml-auto w-10 h-10 focus:outline-none lg:hidden"
-        x-on:click="mobileOpen = !mobileOpen"
-      >
+      <button type="button" class="flex relative justify-center items-center ml-auto w-10 h-10 focus:outline-none lg:hidden" x-on:click="mobileOpen = !mobileOpen">
         <div class="block top-1/2 left-6 w-4 -translate-x-1/2 -translate-y-1/2">
-          <span
-            class="block absolute w-7 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out"
-            x-bind:class="mobileOpen ? 'rotate-45' : '-translate-y-2'"></span>
-          <span
-            class="block absolute w-5 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out"
-            x-bind:class="mobileOpen ? 'opacity-0' : ''"></span>
-          <span
-            class="block absolute w-7 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out"
-            x-bind:class="mobileOpen ? '-rotate-45' : 'translate-y-2'"></span>
+          <span class="block absolute w-7 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out" x-bind:class="mobileOpen ? 'rotate-45' : '-translate-y-2'"></span>
+          <span class="block absolute w-5 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out" x-bind:class="mobileOpen ? 'opacity-0' : ''"></span>
+          <span class="block absolute w-7 h-0.5 text-primary-500 bg-current transition duration-500 ease-in-out" x-bind:class="mobileOpen ? '-rotate-45' : 'translate-y-2'"></span>
         </div>
       </button>
     </div>
-    <div
-      class="hidden text-center lg:flex grow"
-      x-bind:class="{
+    <div class="hidden text-center lg:flex grow" x-bind:class=`{
           'block': mobileOpen,
           'hidden': !mobileOpen
-      }"
-    >
-      <ul
-        class="ltablet:w-full ltablet:max-w-sm lg:w-full lg:max-w-sm ltablet:mx-auto flex flex-col mt-3 mb-1 lg:flex-row lg:mx-auto lg:mt-0 lg:mb-0 lg:gap-x-4"
-      >
+      }`>
+      <ul class="ltablet:w-full ltablet:max-w-sm lg:w-full lg:max-w-sm ltablet:mx-auto flex flex-col mt-3 mb-1 lg:flex-row lg:mx-auto lg:mt-0 lg:mb-0 lg:gap-x-4">
         <li class="ltablet:flex-1 lg:flex-1 flex items-center justify-center">
           <a
             href="https://go.cssninja.io/buy-folio/"
-            class="block text-sm font-sans hover:text-primary-500 dark:text-muted-200 dark:hover:text-primary-400 py-2 tw-accessibility"
+            class="block text-base font-sans hover:text-primary-500 dark:text-muted-200 dark:hover:text-primary-400 py-2 lg:rounded-md lg:px-4 lg:hover:bg-muted-100 dark:lg:hover:bg-muted-900 md:mx-2 tw-accessibility"
           >
-            Product details
+            Product
           </a>
         </li>
         <li class="ltablet:flex-1 lg:flex-1 flex items-center justify-center">
           <a
             href="#template-demos"
-            class="block text-sm font-sans hover:text-primary-500 py-2 dark:text-muted-200 dark:hover:text-primary-400 tw-accessibility scroll-link"
+            class="block text-base font-sans hover:text-primary-500 dark:text-muted-200 dark:hover:text-primary-400 py-2 lg:rounded-md lg:px-4 lg:hover:bg-muted-100 dark:lg:hover:bg-muted-900 md:mx-2 tw-accessibility scroll-link"
           >
-            Demos pages
+            Demos
           </a>
         </li>
         <li class="ltablet:flex-1 lg:flex-1 flex items-center justify-center">
           <a
             href="https://go.cssninja.io/docs-folio/"
-            class="block text-sm font-sans hover:text-primary-500 dark:text-muted-200 dark:hover:text-primary-400 py-2 tw-accessibility"
+            class="block text-base font-sans hover:text-primary-500 dark:text-muted-200 dark:hover:text-primary-400 py-2 lg:rounded-md lg:px-4 lg:hover:bg-muted-100 dark:lg:hover:bg-muted-900 md:mx-2 tw-accessibility"
           >
             Documentation
           </a>

@@ -1,7 +1,7 @@
 ---
 import type { PaginateFunction, Page } from 'astro'
 import { SiteMetadata, authorDetail, PAGE_SIZE } from '@config'
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content'
 import { slug } from 'github-slugger'
 import Layout from '@layouts/Default.astro'
 import Section from '@components/layout/Section.astro'
@@ -18,48 +18,46 @@ const { page } = Astro.props
 
 const frontmatter = {
   title: 'Tag: ' + tag + (page.size < page.total ? ' (page ' + page.currentPage + ' of ' + page.lastPage + ')' : ''),
-  description:
-    'Showing articles ' +
-    (page.start + 1) +
-    '-' +
-    (page.end + 1) +
-    ' (total ' +
-    page.total +
-    ')',
-  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  description: 'Showing articles ' + (page.start + 1) + '-' + (page.end + 1) + ' (total ' + page.total + ')',
+  coverImage: '/svg/illustrations/scenes/draw-1.svg',
   socialImage: undefined,
   publishDate: SiteMetadata.buildTime,
 }
 
 export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
-  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-    (a, b) =>
-      b.data.publishDate.valueOf() -
-      a.data.publishDate.valueOf()
-  );
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 
   const tags = posts.reduce((acc, post) => {
-    post.data.tags?.forEach((tag) => {
+    post.data.tags?.forEach(tag => {
       if (!acc.includes(tag)) {
-        acc.push(tag);
+        acc.push(tag)
       }
-    });
-    return acc;
-  }, [] as string[]);
-
-  return tags.map(tag => {
-    return paginate(posts.filter(post => tag && post.data.tags?.includes(tag)), {
-      params: { tag: slug(tag) },
-      pageSize: PAGE_SIZE
     })
-  })
+    return acc
+  }, [] as string[])
+
+  return tags
+    .map(tag =>
+      paginate(
+        posts.filter(post => tag && post.data.tags?.includes(tag)),
+        {
+          params: { tag: slug(tag) },
+          pageSize: PAGE_SIZE,
+        }
+      )
+    )
+    .flat()
 }
 ---
 
 <Layout frontmatter={frontmatter}>
   <Section class="bg-muted-100 dark:bg-muted-900">
     <Container>
-      <BlogList title={`Tagged with '${tag}'`} subtitle="You can find all the posts that are associated with the tag you've selected below. Tags act as a way to mark posts and classify them based on the kind of information they provide." posts={page.data} />
+      <BlogList
+        title={`Tagged with '${tag}'`}
+        subtitle="You can find all the posts that are associated with the tag you've selected below. Tags act as a way to mark posts and classify them based on the kind of information they provide."
+        posts={page.data}
+      />
       <BlogPagination page={page} />
     </Container>
   </Section>

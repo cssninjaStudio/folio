@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Wallace Knolder
 publishDate: 2022-07-26T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/15.png
-socialImage: ../images/posts/15.png
+coverImage: /images/posts/15.png
+socialImage: /images/posts/15.png
 categories:
   - tutorials
 tags:

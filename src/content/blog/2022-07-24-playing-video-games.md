@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Frieda Weinberg
 publishDate: 2022-07-24T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/17.png
-socialImage: ../images/posts/17.png
+coverImage: /images/posts/17.png
+socialImage: /images/posts/17.png
 categories:
   - lifestyle
 tags:

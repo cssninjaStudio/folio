@@ -3,35 +3,22 @@ import type { CollectionEntry } from 'astro:content'
 import type { TagType } from '@config'
 import { slug } from 'github-slugger'
 import { SiteMetadata } from '@config'
-import { getCollection } from 'astro:content';
-import { Icon } from 'astro-icon'
+import { getCollection } from 'astro:content'
+import { Icon } from 'astro-icon/components'
 import Layout from '@layouts/Default.astro'
 import Section from '@components/layout/Section.astro'
 import Container from '@components/layout/Container.astro'
 
-const icons = [
-  'ph:square-duotone',
-  'ph:diamond-duotone',
-  'ph:triangle-duotone',
-  'ph:circle-duotone',
-  'ph:rectangle-duotone',
-  'ph:octagon-duotone',
-  'ph:shield-duotone',
-  'ph:hexagon-duotone',
-]
+const icons = ['ph:square-duotone', 'ph:diamond-duotone', 'ph:triangle-duotone', 'ph:circle-duotone', 'ph:rectangle-duotone', 'ph:octagon-duotone', 'ph:shield-duotone', 'ph:hexagon-duotone']
 
 const frontmatter = {
   title: 'Tags',
   description: 'Articles by tags',
-  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  coverImage: '/svg/illustrations/scenes/draw-1.svg',
   publishDate: SiteMetadata.buildTime,
 }
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) =>
-    b.data.publishDate.valueOf() -
-    a.data.publishDate.valueOf()
-);
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 
 const tagmap: Map<string, TagType> = new Map()
 
@@ -57,42 +44,24 @@ const tags = Array.from(tagmap.values())
       <div class="relative">
         <div class="pt-10 sm:pt-20 mb-12">
           <div class="max-w-xl space-y-2">
-            <h2
-              class="font-sans font-medium text-4xl text-muted-700 dark:text-white"
-            >
-              Articles by tags
-            </h2>
-            <p
-              class="font-sans text-sm lg:text-base text-muted-500 dark:text-muted-400"
-            >
-              Browse through our expertly curated tag markers and uncover new
-              insights on the things you're interested in. You'll probably find
-              something that piques your curiosity and expands your knowledge.
-              Start exploring!
+            <h2 class="font-sans font-medium text-4xl text-muted-700 dark:text-white">Articles by tags</h2>
+            <p class="font-sans text-sm lg:text-base text-muted-500 dark:text-muted-400">
+              Browse through our expertly curated tag markers and uncover new insights on the things you're interested in. You'll probably find something that piques your curiosity and expands your
+              knowledge. Start exploring!
             </p>
           </div>
         </div>
-        <div
-          class="grid sm:grid-cols-3 ltablet:grid-cols-4 lg:grid-cols-5 gap-4"
-        >
+        <div class="grid sm:grid-cols-3 ltablet:grid-cols-4 lg:grid-cols-5 gap-4">
           {
             tags
               .sort((a, b) => b.count - a.count)
               .map((tag, i) => (
-                <a
-                  href={`/tags/${slug(tag.tag)}/`}
-                  class="group"
-                >
+                <a href={`/tags/${slug(tag.tag)}/`} class="group">
                   <div class="relative">
                     <div class="flex gap-4 p-4 rounded-lg border border-muted-200 dark:border-muted-700 bg-white dark:bg-muted-800 group-hover:border-primary-500 dark:group-hover:border-primary-500 group-hover:shadow-xl group-hover:shadow-muted-300/30 dark:group-hover:shadow-muted-900/50 transition-all duration-300">
-                      <Icon
-                        name={icons[i % icons.length]}
-                        class="w-6 h-6 text-muted-400 group-hover:text-primary-500 transition-colors duration-200"
-                      />
+                      <Icon name={icons[i % icons.length]} class="w-6 h-6 text-muted-400 group-hover:text-primary-500 transition-colors duration-200" />
                       <div>
-                        <h3 class="font-sans text-muted-800 dark:text-muted-100 text-sm font-semibold capitalize leading-tight">
-                          {tag.tag}
-                        </h3>
+                        <h3 class="font-sans text-muted-800 dark:text-muted-100 text-sm font-semibold capitalize leading-tight">{tag.tag}</h3>
                         <p class="font-sans text-muted-400 text-sm font-medium">
                           <span>
                             {tag.count} matching post

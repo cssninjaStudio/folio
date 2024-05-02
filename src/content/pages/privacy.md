@@ -2,7 +2,7 @@
 title: Privacy
 description: Our policy regarding information collection and use
 publishDate: 2022-08-08T00:00:00.000Z
-coverSVG: ../svg/illustrations/scenes/draw-1.svg
+coverImage: /svg/illustrations/scenes/draw-1.svg
 ---
 
 ## Privacy Policy

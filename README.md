@@ -6,44 +6,32 @@
 ## ✌️ preview
 
 Check out the live demo by clicking [here](https://folio.cssninja.io/). 
-Folio is built with [Tailwind CSS](https://tailwindcss.com/) and [Alpine JS](https://github.com/alpinejs/alpine).
+Folio is built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com/) and [Alpine JS](https://github.com/alpinejs/alpine).
 
 ## 👍 Features
 
-* Astro v2.x
-* Node.js 16/18+
+* Astro v4.x
 * Tailwind v3.x
-* ES6 support
 * Alpine v3.x
-
-### Requirements
-
-To use this template, your computer needs:
-
-- Node.js (>= 16.x.x) is used to run the build processes. https://nodejs.org/en/download/
-- Test: run `node -v` in the terminal
 
 ## 👌 Usage
 
-1. enable pnpm with corepack
+1. Install Depedencies
 
-```bash
-corepack enable
-corepack prepare pnpm@latest --activate
-```
-
-> _corepack is installed with Node.js from **v16.13.x**, if your version is below, install it with: `npm install -g corepack`, or upgrade Node.js_ 
-
-2. Install depedencies
-
-```bash
+```sh
 pnpm i
 ```
 
-3. To start development server
+2. Run in dev mode
 
-```bash
+```sh
 pnpm dev
+```
+
+3. Or build source
+
+```sh
+pnpm build
 ```
 
 ## 💡 What to do next ?

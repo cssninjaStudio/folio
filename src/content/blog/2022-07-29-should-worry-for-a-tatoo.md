@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Irina Kropova
 publishDate: 2022-07-29T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/14.png
-socialImage: ../images/posts/14.png
+coverImage: /images/posts/14.png
+socialImage: /images/posts/14.png
 categories:
   - tutorials
 tags:

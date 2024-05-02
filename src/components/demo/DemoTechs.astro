@@ -1,19 +1,14 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 ---
 
 <div class="pb-16">
   <div class="w-full mt-6">
     <!--Section title-->
     <div id="get-started" class="w-full max-w-md mb-5">
-      <h2
-        class="font-sans font-light text-3xl text-muted-800 dark:text-white mb-4"
-      >
-        Built with
-      </h2>
+      <h2 class="font-sans font-light text-3xl text-muted-800 dark:text-white mb-4">Built with</h2>
       <p class="font-sans text-muted-500 dark:text-muted-400">
-        Folio is a sleek and modern blogging template that uses the latest Content Collections from Astro v2 
-        and is built with TailwindCSS and Alpine.js. 
+        Folio is a sleek and modern blogging template that uses the latest Content Collections from Astro v2 and is built with TailwindCSS and Alpine.js.
       </p>
     </div>
 
@@ -22,63 +17,33 @@ import { Icon } from 'astro-icon'
       <div
         class="block py-8 px-4 rounded-xl text-center bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 hover:shadow-xl shadow-muted-400/10 hover:dark:shadow-muted-800/10 transition-all duration-300"
       >
+        <Icon name="logos:astro-icon" class="block w-9 h-9 mx-auto mb-3" />
+        <h3 class="font-sans font-medium text-base text-muted-800 dark:text-white">Astro</h3>
+        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">Version 4.x</p>
+      </div>
+      <!--Grid item-->
+      <div
+        class="block py-8 px-4 rounded-xl text-center bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 hover:shadow-xl shadow-muted-400/10 hover:dark:shadow-muted-800/10 transition-all duration-300"
+      >
         <Icon name="teenyicons:markdown-solid" class="block w-9 h-9 mx-auto mb-3" />
-        <h3
-          class="font-sans font-medium text-base text-muted-800 dark:text-white"
-        >
-          Markdown
-        </h3>
-        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
-          .md / .mdx support
-        </p>
+        <h3 class="font-sans font-medium text-base text-muted-800 dark:text-white">Markdown</h3>
+        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">.md / .mdx support</p>
       </div>
       <!--Grid item-->
       <div
         class="block py-8 px-4 rounded-xl text-center bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 hover:shadow-xl shadow-muted-400/10 hover:dark:shadow-muted-800/10 transition-all duration-300"
       >
         <Icon name="logos:alpinejs-icon" class="block w-11 h-11 mx-auto mb-1" />
-        <h3
-          class="font-sans font-medium text-base text-muted-800 dark:text-white"
-        >
-          Alpine.js
-        </h3>
-        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
-          Version 3.x
-        </p>
+        <h3 class="font-sans font-medium text-base text-muted-800 dark:text-white">Alpine.js</h3>
+        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">Version 3.x</p>
       </div>
       <!--Grid item-->
       <div
         class="block py-8 px-4 rounded-xl text-center bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 hover:shadow-xl shadow-muted-400/10 hover:dark:shadow-muted-800/10 transition-all duration-300"
       >
-        <Icon
-          name="logos:tailwindcss-icon"
-          class="block w-11 h-11 mx-auto mb-1"
-        />
-        <h3
-          class="font-sans font-medium text-base text-muted-800 dark:text-white"
-        >
-          Tailwind CSS
-        </h3>
-        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
-          Version 3.x
-        </p>
-      </div>
-      <!--Grid item-->
-      <div
-        class="block py-8 px-4 rounded-xl text-center bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 hover:shadow-xl shadow-muted-400/10 hover:dark:shadow-muted-800/10 transition-all duration-300"
-      >
-        <Icon
-          name="vscode-icons:file-type-astro"
-          class="block w-9 h-9 mx-auto mb-3"
-        />
-        <h3
-          class="font-sans font-medium text-base text-muted-800 dark:text-white"
-        >
-          Astro
-        </h3>
-        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">
-          Version 2.x
-        </p>
+        <Icon name="logos:tailwindcss-icon" class="block w-11 h-11 mx-auto mb-1" />
+        <h3 class="font-sans font-medium text-base text-muted-800 dark:text-white">Tailwind CSS</h3>
+        <p class="font-sans text-xs text-muted-500 dark:text-muted-400">Version 3.x</p>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 ---
 import { SiteMetadata } from '@config'
-import { getCollection } from 'astro:content';
+import { getCollection } from 'astro:content'
 import Layout from '@layouts/Default.astro'
 import BlogHeader from '@components/blog/BlogHeader.astro'
 import BlogCategoriesFeatured from '@components/blog/BlogCategoriesFeatured.astro'
@@ -12,18 +12,13 @@ import Subscribe from '@components/content/Subscribe.astro'
 const frontmatter = {
   title: SiteMetadata.title,
   description: SiteMetadata.description,
-  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  coverImage: '/svg/illustrations/scenes/draw-1.svg',
   socialImage: undefined,
   publishDate: SiteMetadata.buildTime,
 }
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) =>
-    b.data.publishDate.valueOf() -
-    a.data.publishDate.valueOf()
-);
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 
-const featuredPosts = posts
-  .filter(post => post.data.featured)
+const featuredPosts = posts.filter(post => post.data.featured)
 ---
 
 <Layout frontmatter={frontmatter}>

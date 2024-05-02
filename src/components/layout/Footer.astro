@@ -1,66 +1,34 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { SiteMetadata, Logo } from '@config'
 import Container from '@components/layout/Container.astro'
-import SVGImg from '@components/svgimg.astro'
 ---
 
 <footer class="py-8 bg-muted-100 dark:bg-muted-800">
   <Container>
     <div class="w-full flex flex-col md:flex-row items-center justify-between gap-x-12 gap-y-4 px-4 lg:px-6">
       <span class="flex-none flex flex-row items-center">
-        <a
-          class="flex title-font font-medium items-center lg:justify-start justify-center text-muted-800 dark:text-muted-100"
-          href={'/home'}
-        >
-          <SVGImg src={Logo} alt="Footer Logo" class="h-8 w-8" />
+        <a class="flex title-font font-medium items-center lg:justify-start justify-center text-muted-800 dark:text-muted-100" href={'/home'}>
+          <img src={Logo} alt="Footer Logo" class="h-8 w-8" />
           <span class="sr-only">Logo</span>
         </a>
         <p class="font-sans text-sm ml-4 pl-4 border-l border-muted-300 dark:border-muted-600/60 text-muted-500 dark:text-muted-400">
           © {new Date().getFullYear()}
-          <a
-            href="https://cssninja.io.com"
-            class="font-sans text-sm text-primary-500"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            cssninja.io
-          </a>
+          <a href="https://cssninja.io.com" class="font-sans text-sm text-primary-500" rel="noopener noreferrer" target="_blank"> cssninja.io </a>
         </p>
       </span>
       <span class="flex items-center gap-x-6">
         <p class="text-sm text-muted-600 dark:text-muted-300">
-          <a
-            href={'/home'}
-            class="font-sans text-sm text-muted-500 dark:text-muted-400"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Home
-          </a>
+          <a href={'/home'} class="font-sans text-sm text-muted-500 dark:text-muted-400" rel="noopener noreferrer" target="_blank"> Home </a>
         </p>
         <p class="text-sm text-muted-600 dark:text-muted-300">
-          <a
-            href={`/privacy`}
-            class="font-sans text-sm text-muted-500 dark:text-muted-400"
-          >
-            Privacy
-          </a>
+          <a href={`/privacy`} class="font-sans text-sm text-muted-500 dark:text-muted-400"> Privacy </a>
         </p>
         <p class="text-sm text-muted-600">
-          <a
-            href={'/rss.xml'}
-            class="font-sans text-sm text-muted-500 dark:text-muted-400"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            RSS
-          </a>
+          <a href={'/rss.xml'} class="font-sans text-sm text-muted-500 dark:text-muted-400" rel="noopener noreferrer" target="_blank"> RSS </a>
         </p>
       </span>
-      <span
-        class="grow inline-flex lg:ml-auto justify-center sm:justify-end mt-2 sm:mt-0"
-      >
+      <span class="grow inline-flex lg:ml-auto justify-center sm:justify-end mt-2 sm:mt-0">
         {
           SiteMetadata.social.map(s =>
             s.link ? (
@@ -70,7 +38,7 @@ import SVGImg from '@components/svgimg.astro'
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Icon pack="brandico" name={s.icon} class=" h-4 w-4" />
+                <Icon name={s.icon} class=" h-4 w-4" />
                 <span class="sr-only">{s.name}</span>
               </a>
             ) : (

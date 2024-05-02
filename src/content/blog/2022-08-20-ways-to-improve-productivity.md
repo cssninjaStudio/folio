@@ -6,8 +6,8 @@ minutesRead: 5 minutes read
 author: Maya Piretti
 publishDate: 2022-08-28T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/3.png
-socialImage: ../images/posts/3.png
+coverImage: /images/posts/3.png
+socialImage: /images/posts/3.png
 categories:
   - coaching
 tags:

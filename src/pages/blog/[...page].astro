@@ -1,7 +1,7 @@
 ---
 import type { PaginateFunction, Page } from 'astro'
 import { SiteMetadata, PAGE_SIZE } from '@config'
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content'
 import Layout from '@layouts/Default.astro'
 import Section from '@components/layout/Section.astro'
 import Container from '@components/layout/Container.astro'
@@ -16,44 +16,27 @@ const { page } = Astro.props
 
 const frontmatter = {
   title: 'Blog' + (page.size < page.total ? ' (page ' + page.currentPage + ' of ' + page.lastPage + ')' : ''),
-  description:
-    'Showing articles ' +
-    (page.start + 1) +
-    '-' +
-    (page.end + 1) +
-    ' (total ' +
-    page.total +
-    ')',
-  coverSVG: '../svg/illustrations/scenes/draw-1.svg',
+  description: 'Showing articles ' + (page.start + 1) + '-' + (page.end + 1) + ' (total ' + page.total + ')',
+  coverImage: '/svg/illustrations/scenes/draw-1.svg',
   socialImage: undefined,
   publishDate: SiteMetadata.buildTime,
 }
 
 export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
-  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-    (a, b) =>
-      b.data.publishDate.valueOf() -
-      a.data.publishDate.valueOf()
-  );
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 
   return paginate(posts, { pageSize: PAGE_SIZE })
 }
 ---
 
 <Layout frontmatter={frontmatter}>
-  <!-- header>
-    <PageHero
-      title={frontmatter.title}
-      description={frontmatter.description}
-      coverSVG={frontmatter.coverSVG}
-      socialImage={frontmatter.socialImage}
-    >
-      <BlogPagination page={page} />
-    </PageHero>
-  </header -->
   <Section class="bg-muted-100 dark:bg-muted-900">
     <Container>
-      <BlogList title="All Posts" subtitle="Stay up-to-date with the most engaging and thought-provoking articles in our articles section: your go-to destination for quality content" posts={page.data} />
+      <BlogList
+        title="All Posts"
+        subtitle="Stay up-to-date with the most engaging and thought-provoking articles in our articles section: your go-to destination for quality content"
+        posts={page.data}
+      />
       <BlogPagination page={page} />
     </Container>
   </Section>

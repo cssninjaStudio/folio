@@ -6,8 +6,8 @@ minutesRead: 8 minutes read
 author: Maya Piretti
 publishDate: 2022-08-27T00:00:00.000Z
 featured: true
-coverImage: ../images/posts/6.png
-socialImage: ../images/posts/6.png
+coverImage: /images/posts/6.png
+socialImage: /images/posts/6.png
 categories:
   - UX design
 tags:

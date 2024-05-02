@@ -1,11 +1,10 @@
 import { defineConfig } from 'astro/config'
 import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
-import image from '@astrojs/image'
 import mdx from '@astrojs/mdx'
 import alpinejs from '@astrojs/alpinejs'
 import robotsTxt from 'astro-robots-txt'
-
+import icon from 'astro-icon'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import remarkPlantUML from '@akebifiky/remark-simple-plantuml'
@@ -13,20 +12,18 @@ import { remarkReadingTime } from './remark-plugins/remark-reading-time.mjs';
 import { remarkDiagram } from './remark-plugins/remark-diagram.mjs';
 import pagefind from "astro-pagefind";
 
-// https://astro.build/config
 export default defineConfig({
   vite: {
     ssr: {
       external: ['svgo'],
     },
   },
+  build: {
+    format: "file",
+  },
   site: process.env.FRONTEND_URL || 'http://localhost:3000',
   base: '/',
-  // output: 'server',
-  integrations: [tailwind(), sitemap(), image(), mdx(), alpinejs(), robotsTxt(), pagefind()],
-  experimental: {
-    integrations: true,
-  },
+  integrations: [tailwind(), sitemap(), mdx(), alpinejs(), robotsTxt(), pagefind(), icon()],
   markdown: {
     extendDefaultPlugins: true,
     remarkPlugins: [

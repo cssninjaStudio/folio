@@ -1,6 +1,6 @@
 ---
-import { getCollection, CollectionEntry } from 'astro:content';
-import { Icon } from 'astro-icon'
+import { getCollection, type CollectionEntry } from 'astro:content'
+import { Icon } from 'astro-icon/components'
 import Layout from '@layouts/Default.astro'
 import Section from '@components/layout/Section.astro'
 import Container from '@components/layout/Container.astro'
@@ -8,22 +8,22 @@ import BlogHero from '@components/blog/BlogHero.astro'
 import BlogTags from '@components/blog/BlogTags.astro'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = await getCollection('blog', ({ data }) => !data.draft)
   return posts.map(entry => ({
     // Pass blog entry via props
-    params: { slug: entry.slug }, props: { entry },
-  }));
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
 }
 
 interface Props {
   // Optionally use `CollectionEntry` for type safety
-  entry: CollectionEntry<'blog'>;
+  entry: CollectionEntry<'blog'>
 }
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { entry } = Astro.props
+const { Content } = await entry.render()
 ---
-
 
 <Layout frontmatter={entry.data}>
   <div>
@@ -31,9 +31,7 @@ const { Content } = await entry.render();
       <BlogHero frontmatter={entry.data} />
       <Section class="bg-white dark:bg-muted-900">
         <Container>
-          <div
-            class="max-w-2xl xxl:max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert"
-          >
+          <div class="max-w-2xl xxl:max-w-3xl mx-auto prose prose-purple xxl:prose-lg dark:prose-invert">
             <Content />
 
             <!-- Tags -->

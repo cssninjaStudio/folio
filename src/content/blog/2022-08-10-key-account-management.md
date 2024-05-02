@@ -5,8 +5,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nemo ni
 author: Alan Mitchells
 publishDate: 2022-08-10T00:00:00.000Z
 featured: false
-coverImage: ../images/posts/8.png
-socialImage: ../images/posts/8.png
+coverImage: /images/posts/8.png
+socialImage: /images/posts/8.png
 categories:
   - coaching
 tags:
