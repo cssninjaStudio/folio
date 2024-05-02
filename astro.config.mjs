@@ -18,9 +18,6 @@ export default defineConfig({
       external: ['svgo'],
     },
   },
-  build: {
-    format: "file",
-  },
   site: process.env.FRONTEND_URL || 'http://localhost:3000',
   base: '/',
   integrations: [tailwind(), sitemap(), mdx(), alpinejs(), robotsTxt(), pagefind(), icon()],
