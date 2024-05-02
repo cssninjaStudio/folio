@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/cssninjaStudio/folio/compare/v1.1.0...v1.2.0) (2024-05-02)
+
+
+### Features
+
+* migrate to Astro v4, update dependencies, fix bugs ([73078ed](https://github.com/cssninjaStudio/folio/commit/73078ede857e4076b99e04f0f18227cb200461d7))
+
 ## [1.1.0](https://github.com/cssninjaStudio/folio/compare/v1.0.1...v1.1.0) (2023-05-15)
 
 
